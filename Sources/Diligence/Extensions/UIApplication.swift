@@ -55,11 +55,14 @@ extension UIApplication {
         return String(format: "%02x", shaValue)
     }
 
-    public var commitUrl: URL? {
+    public func commitUrl(for project: String) -> URL? {
         guard let sha = self.commit else {
             return nil
         }
-        return URL(string: "https://github.com/inseven/statuspanel/commit")?.appendingPathComponent(sha)
+        return URL(string: "https://github.com")?
+            .appendingPathComponent(project)
+            .appendingPathComponent("commit")
+            .appendingPathComponent(sha)
     }
 
 }

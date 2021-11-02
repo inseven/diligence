@@ -29,6 +29,8 @@ public struct BuildSection: View {
         return dateFormatter
     }()
 
+    var project: String
+
     private var date: String? {
         guard let date = UIApplication.shared.utcBuildDate else {
             return nil
@@ -36,7 +38,8 @@ public struct BuildSection: View {
         return Self.dateFormatter.string(from: date)
     }
 
-    public init() {
+    public init(_ project: String) {
+        self.project = project
     }
 
     public var body: some View {
@@ -45,7 +48,7 @@ public struct BuildSection: View {
             ValueRow(text: "Build", detailText: UIApplication.shared.build ?? "")
             ValueRow(text: "Date", detailText: date ?? "")
             Button {
-                guard let url = UIApplication.shared.commitUrl else {
+                guard let url = UIApplication.shared.commitUrl(for: project) else {
                     return
                 }
                 UIApplication.shared.open(url, options: [:])
