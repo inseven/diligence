@@ -1,4 +1,4 @@
-# Dilligence
+# Diligence
 
 Common components for building iOS and macOS App Store apps
 
