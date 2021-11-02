@@ -34,7 +34,7 @@ struct LicenseView: View {
             Text(license.text)
             .padding(.top, 8)
         }
-        .listStyle(.plain)
+        .listStyle(PlainListStyle())
         .navigationBarTitle(license.name, displayMode: .inline)
     }
 
