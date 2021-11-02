@@ -29,17 +29,12 @@ struct LicenseView: View {
     }
 
     var body: some View {
-        ScrollView {
+        List {
             ValueRow(text: "Author", detailText: license.author)
-                .padding()
-            Divider()
-                .padding(.leading)
-            HStack {
-                Text(license.text)
-                Spacer()
-            }
-            .padding()
+            Text(license.text)
+            .padding(.top, 8)
         }
+        .listStyle(.plain)
         .navigationBarTitle(license.name, displayMode: .inline)
     }
 
