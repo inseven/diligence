@@ -22,6 +22,14 @@ import UIKit
 
 extension UIApplication {
 
+    public var name: String? {
+        return Bundle.main.infoDictionary?["CFBundleName"] as? String
+    }
+
+    public var displayName: String? {
+        return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
+    }
+
     public var version: String? {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     }
