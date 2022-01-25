@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2021 Jason Morley, Tom Sutcliffe
+// Copyright (c) 2018-2022 Jason Morley, Tom Sutcliffe
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,18 @@
 
 import SwiftUI
 
-extension String: Identifiable {
+public struct Credit: Identifiable {
 
     public var id: String {
-        return self
-    }
-    
-}
-
-public struct CreditSection: View {
-
-    private var title: String?
-    private var people: [String]
-
-    public init(_ title: String? = nil, _ people: [String]) {
-        self.title = title
-        self.people = people
+        return name
     }
 
-    public var body: some View {
-        EmptyView()
-        Section(header: title != nil ? Text(title!) : nil) {
-            ForEach(people) { person in
-                Text(person)
-            }
-        }
+    var name: String
+    var url: URL?
 
+    public init(_ name: String, url: URL? = nil) {
+        self.name = name
+        self.url = url
     }
 
 }
