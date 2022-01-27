@@ -20,9 +20,9 @@
 
 import SwiftUI
 
-public struct BuildSection: View {
+public struct BuildSection<Header: View>: View {
 
-    private static let dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
@@ -30,20 +30,22 @@ public struct BuildSection: View {
     }()
 
     var project: String
+    var header: Header?
 
     private var date: String? {
         guard let date = UIApplication.shared.utcBuildDate else {
             return nil
         }
-        return Self.dateFormatter.string(from: date)
+        return dateFormatter.string(from: date)
     }
 
-    public init(_ project: String) {
+    public init(_ project: String, @ViewBuilder header: () -> Header?) {
         self.project = project
+        self.header = header()
     }
 
     public var body: some View {
-        Section {
+        Section(header: header) {
             ValueRow(text: "Version", detailText: UIApplication.shared.version ?? "")
             ValueRow(text: "Build", detailText: UIApplication.shared.build ?? "")
             ValueRow(text: "Date", detailText: date ?? "")
@@ -51,11 +53,20 @@ public struct BuildSection: View {
                 guard let url = UIApplication.shared.commitUrl(for: project) else {
                     return
                 }
-                UIApplication.shared.open(url, options: [:])
+                UIApplication.shared.open(url)
             } label: {
                 ValueRow(text: "Commit", detailText: UIApplication.shared.commit ?? "")
             }
         }
+    }
+
+}
+
+
+extension BuildSection where Header == EmptyView {
+
+    public init(_ project: String) {
+        self.init(project, header: { return nil })
     }
 
 }
