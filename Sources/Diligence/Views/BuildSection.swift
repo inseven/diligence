@@ -39,7 +39,7 @@ public struct BuildSection<Header: View>: View {
         return dateFormatter.string(from: date)
     }
 
-    public init(_ project: String?, @ViewBuilder header: () -> Header?) {
+    public init(_ project: String? = nil, @ViewBuilder header: () -> Header?) {
         self.project = project
         self.header = header()
     }
@@ -68,7 +68,7 @@ public struct BuildSection<Header: View>: View {
 
 extension BuildSection where Header == EmptyView {
 
-    public init(_ project: String?, commitUrl: URL? = nil) {
+    public init(_ project: String? = nil, commitUrl: URL? = nil) {
         self.init(project, header: { return nil })
     }
 
