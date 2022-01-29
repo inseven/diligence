@@ -29,7 +29,7 @@ public struct BuildSection<Header: View>: View {
         return dateFormatter
     }()
 
-    var project: String
+    var project: String?
     var header: Header?
 
     private var date: String? {
@@ -39,7 +39,7 @@ public struct BuildSection<Header: View>: View {
         return dateFormatter.string(from: date)
     }
 
-    public init(_ project: String, @ViewBuilder header: () -> Header?) {
+    public init(_ project: String?, @ViewBuilder header: () -> Header?) {
         self.project = project
         self.header = header()
     }
@@ -48,14 +48,17 @@ public struct BuildSection<Header: View>: View {
         Section(header: header) {
             ValueRow(text: "Version", detailText: UIApplication.shared.version ?? "")
             ValueRow(text: "Build", detailText: UIApplication.shared.build ?? "")
-            ValueRow(text: "Date", detailText: date ?? "")
-            Button {
-                guard let url = UIApplication.shared.commitUrl(for: project) else {
-                    return
+            if let date = date {
+                ValueRow(text: "Date", detailText: date)
+            }
+            if let project = project,
+               let url = UIApplication.shared.commitUrl(for: project),
+               let commit = UIApplication.shared.commit {
+                Button {
+                    UIApplication.shared.open(url)
+                } label: {
+                    ValueRow(text: "Commit", detailText: commit)
                 }
-                UIApplication.shared.open(url)
-            } label: {
-                ValueRow(text: "Commit", detailText: UIApplication.shared.commit ?? "")
             }
         }
     }
@@ -65,7 +68,7 @@ public struct BuildSection<Header: View>: View {
 
 extension BuildSection where Header == EmptyView {
 
-    public init(_ project: String) {
+    public init(_ project: String?, commitUrl: URL? = nil) {
         self.init(project, header: { return nil })
     }
 
