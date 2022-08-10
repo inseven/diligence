@@ -27,9 +27,11 @@ public struct ApplicationNameTitle: View {
     }
 
     private var fontWeight: Font.Weight {
+#if compiler(>=5.7)
         guard #available(iOS 16, *) else {
             return .semibold
         }
+#endif
         return .bold
     }
 

@@ -30,18 +30,26 @@ struct LabeledContent<Content: View>: View {
         self.content = content
     }
 
+    var legacyBody: some View {
+        HStack {
+            Text(title)
+                .foregroundColor(.primary)
+            Spacer()
+            content()
+                .foregroundColor(.secondary)
+        }
+    }
+
     var body: some View {
+#if compiler(>=5.7)
         if #available(iOS 16, *) {
             SwiftUI.LabeledContent(title, content: content)
         } else {
-            HStack {
-                Text(title)
-                    .foregroundColor(.primary)
-                Spacer()
-                content()
-                    .foregroundColor(.secondary)
-            }
+            legacyBody
         }
+#else
+        legacyBody
+#endif
     }
 
 }
