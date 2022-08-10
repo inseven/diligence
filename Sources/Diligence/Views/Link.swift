@@ -22,8 +22,21 @@ import SwiftUI
 
 public struct Link: View {
 
-    var text: String
-    var url: URL
+    @Environment(\.openURL) private var openURL
+
+    private let text: String
+    private let url: URL
+
+    private var isMailto: Bool {
+        return url.scheme == "mailto"
+    }
+
+    private var image: String {
+        if isMailto {
+            return "envelope"
+        }
+        return "link"
+    }
 
     public init(_ text: String, url: URL) {
         self.text = text
@@ -32,13 +45,10 @@ public struct Link: View {
 
     public var body: some View {
         Button {
-            UIApplication.shared.open(url)
+            openURL(url)
         } label: {
-            HStack {
-                Text(text)
-                    .foregroundColor(.primary)
-                Spacer()
-                Image(systemName: "link")
+            LabeledContent(text) {
+                Image(systemName: image)
                     .foregroundColor(.secondary)
             }
         }
