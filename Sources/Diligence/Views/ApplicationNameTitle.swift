@@ -34,7 +34,7 @@ public struct ApplicationNameTitle: View {
     }
 
     public var body: some View {
-        Text(Bundle.main.displayName ?? "")
+        Text(Bundle.main.displayName ?? Bundle.main.name ?? "")
             .font(.largeTitle)
             .fontWeight(fontWeight)
             .foregroundColor(.primary)
