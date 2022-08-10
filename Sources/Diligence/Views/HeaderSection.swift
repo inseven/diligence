@@ -36,6 +36,9 @@ public struct HeaderSection<Header: View>: View {
                 header
             }
             .frame(maxWidth: .infinity)
+            .foregroundColor(.primary)
+            .textCase(.none)
+            .font(.body)
         }
     }
 

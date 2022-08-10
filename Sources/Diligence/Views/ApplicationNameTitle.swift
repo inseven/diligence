@@ -39,8 +39,6 @@ public struct ApplicationNameTitle: View {
         Text(Bundle.main.displayName ?? Bundle.main.name ?? "")
             .font(.largeTitle)
             .fontWeight(fontWeight)
-            .foregroundColor(.primary)
-            .textCase(.none)
     }
 
 }
