@@ -36,7 +36,6 @@ public struct CreditSection: View {
     }
 
     public var body: some View {
-        EmptyView()
         Section(header: title != nil ? Text(title!) : nil) {
             ForEach(credits) { credit in
                 if let url = credit.url {
