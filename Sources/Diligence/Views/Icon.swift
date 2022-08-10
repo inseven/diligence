@@ -20,25 +20,32 @@
 
 import SwiftUI
 
-public struct IconView: View {
+public struct Icon: View {
 
-    let uiImage: UIImage
+    struct LayoutMetrics {
+        static let size = 120.0
+        static let cornerRadiusRatio = 0.1754
+    }
 
-    public init(uiImage: UIImage) {
-        self.uiImage = uiImage
+    private let name: String
+
+    public init(_ name: String) {
+        self.name = name
     }
 
     public var body: some View {
         GeometryReader { geometry in
-            Image(uiImage: uiImage)
+            Image(name)
                 .resizable()
-                .clipShape(RoundedRectangle(cornerRadius: geometry.size.width * 0.1754))
-                .overlay(RoundedRectangle(cornerRadius: geometry.size.width * 0.1754)
-                            .stroke(.primary, lineWidth: 1)
-                            .opacity(0.2))
+                .clipShape(RoundedRectangle(cornerRadius: geometry.size.width * LayoutMetrics.cornerRadiusRatio,
+                                            style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: geometry.size.width * LayoutMetrics.cornerRadiusRatio,
+                                          style: .continuous)
+                    .stroke(.primary, lineWidth: 1)
+                    .opacity(0.2))
         }
         .aspectRatio(1.0, contentMode: .fit)
-        .frame(width: 120)
+        .frame(width: LayoutMetrics.size, height: LayoutMetrics.size)
     }
 
 }
