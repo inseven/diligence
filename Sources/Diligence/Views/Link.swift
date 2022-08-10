@@ -52,5 +52,6 @@ public struct Link: View {
                     .foregroundColor(.secondary)
             }
         }
+        .foregroundColor(.primary)
     }
 }

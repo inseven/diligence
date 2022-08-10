@@ -39,23 +39,12 @@ public struct CreditSection: View {
         Section(header: title != nil ? Text(title!) : nil) {
             ForEach(credits) { credit in
                 if let url = credit.url {
-                    Button {
-                        UIApplication.shared.open(url, options: [:])
-                    } label: {
-                        HStack {
-                            Text(credit.name)
-                            Spacer()
-                            Image(systemName: "link")
-                                .foregroundColor(.secondary)
-                        }
-                    }
+                    Link(credit.name, url: url)
                 } else {
                     Text(credit.name)
                 }
             }
-            .foregroundColor(.primary)
         }
-
     }
 
 }
