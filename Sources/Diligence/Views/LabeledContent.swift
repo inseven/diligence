@@ -20,23 +20,37 @@
 
 import SwiftUI
 
-public struct ValueRow: View {
+struct LabeledContent<Content: View>: View {
 
-    var text: String
-    var detailText: String
+    let title: String
+    let content: () -> Content
 
-    public init(text: String, detailText: String) {
-        self.text = text
-        self.detailText = detailText
+    init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
+        self.title = title
+        self.content = content
     }
 
-    public var body: some View {
-        HStack {
-            Text(text)
-                .foregroundColor(.primary)
-            Spacer()
-            Text(detailText)
-                .foregroundColor(.secondary)
+    var body: some View {
+        if #available(iOS 16, *) {
+            SwiftUI.LabeledContent(title, content: content)
+        } else {
+            HStack {
+                Text(title)
+                    .foregroundColor(.primary)
+                Spacer()
+                content()
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+
+}
+
+extension LabeledContent where Content == Text {
+
+    init(_ title: String, value: String) {
+        self.init(title) {
+            Text(value)
         }
     }
 

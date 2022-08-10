@@ -30,9 +30,9 @@ struct LicenseView: View {
 
     var body: some View {
         List {
-            ValueRow(text: "Author", detailText: license.author)
+            LabeledContent("Author", value: license.author)
             Text(license.text)
-            .padding(.top, 8)
+                .padding(.top, 8)
         }
         .listStyle(PlainListStyle())
         .navigationBarTitle(license.name, displayMode: .inline)

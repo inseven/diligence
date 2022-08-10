@@ -18,20 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
+import Foundation
 
-extension UIApplication {
+extension Bundle {
 
     public var name: String? {
-        return Bundle.main.infoDictionary?["CFBundleName"] as? String
+        return infoDictionary?["CFBundleName"] as? String
     }
 
     public var displayName: String? {
-        return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
+        return infoDictionary?["CFBundleDisplayName"] as? String
     }
 
     public var version: String? {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        return infoDictionary?["CFBundleShortVersionString"] as? String
     }
 
     public var build: String? {
@@ -39,7 +39,7 @@ extension UIApplication {
     }
 
     public var utcBuildDate: Date? {
-        guard let build = self.build,
+        guard let build = build,
               build.count == 18
         else {
             return nil
@@ -52,7 +52,7 @@ extension UIApplication {
     }
 
     public var commit: String? {
-        guard let build = self.build,
+        guard let build = build,
               build.count == 18
         else {
             return nil
@@ -64,13 +64,14 @@ extension UIApplication {
     }
 
     public func commitUrl(for project: String) -> URL? {
-        guard let sha = self.commit else {
+        guard let commit = commit else {
             return nil
         }
         return URL(string: "https://github.com")?
             .appendingPathComponent(project)
             .appendingPathComponent("commit")
-            .appendingPathComponent(sha)
+            .appendingPathComponent(commit)
     }
+
 
 }

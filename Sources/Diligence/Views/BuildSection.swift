@@ -22,6 +22,8 @@ import SwiftUI
 
 public struct BuildSection<Header: View>: View {
 
+    @Environment(\.openURL) private var openURL
+
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -33,7 +35,7 @@ public struct BuildSection<Header: View>: View {
     var header: Header?
 
     private var date: String? {
-        guard let date = UIApplication.shared.utcBuildDate else {
+        guard let date = Bundle.main.utcBuildDate else {
             return nil
         }
         return dateFormatter.string(from: date)
@@ -46,25 +48,24 @@ public struct BuildSection<Header: View>: View {
 
     public var body: some View {
         Section(header: header) {
-            ValueRow(text: "Version", detailText: UIApplication.shared.version ?? "")
-            ValueRow(text: "Build", detailText: UIApplication.shared.build ?? "")
+            LabeledContent("Version", value: Bundle.main.version ?? "")
+            LabeledContent("Build", value: Bundle.main.build ?? "")
             if let date = date {
-                ValueRow(text: "Date", detailText: date)
+                LabeledContent("Date", value: date)
             }
             if let project = project,
-               let url = UIApplication.shared.commitUrl(for: project),
-               let commit = UIApplication.shared.commit {
+               let url = Bundle.main.commitUrl(for: project),
+               let commit = Bundle.main.commit {
                 Button {
-                    UIApplication.shared.open(url)
+                    openURL(url)
                 } label: {
-                    ValueRow(text: "Commit", detailText: commit)
+                    LabeledContent("Commit", value: commit)
                 }
             }
         }
     }
 
 }
-
 
 extension BuildSection where Header == EmptyView {
 
