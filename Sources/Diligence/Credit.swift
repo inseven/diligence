@@ -26,8 +26,8 @@ public struct Credit: Identifiable {
         return name
     }
 
-    var name: String
-    var url: URL?
+    public let name: String
+    public let url: URL?
 
     public init(_ name: String, url: URL? = nil) {
         self.name = name
