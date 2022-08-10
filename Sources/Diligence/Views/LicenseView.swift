@@ -32,6 +32,7 @@ struct LicenseView: View {
         List {
             LabeledContent("Author", value: license.author)
             Text(license.text)
+                .textSelection(.enabled)
                 .padding(.top, 8)
         }
         .listStyle(PlainListStyle())
