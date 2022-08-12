@@ -30,6 +30,10 @@ extension Bundle {
         return infoDictionary?["CFBundleDisplayName"] as? String
     }
 
+    public var preferredName: String? {
+        return displayName ?? name
+    }
+
     public var version: String? {
         return infoDictionary?["CFBundleShortVersionString"] as? String
     }
