@@ -42,7 +42,7 @@ struct LabeledContent<Content: View>: View {
 
     var body: some View {
 #if compiler(>=5.7)
-        if #available(iOS 16, *) {
+        if #available(iOS 16, *, macOS 13) {
             SwiftUI.LabeledContent(title, content: content)
         } else {
             legacyBody

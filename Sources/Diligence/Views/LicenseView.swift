@@ -36,7 +36,9 @@ struct LicenseView: View {
                 .padding(.top, 8)
         }
         .listStyle(PlainListStyle())
+#if os(iOS)
         .navigationBarTitle(license.name, displayMode: .inline)
+#endif
     }
 
 }
