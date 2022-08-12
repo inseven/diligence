@@ -22,13 +22,11 @@ import Foundation
 
 public struct License: Identifiable {
 
-    public var id: String {
-        return name
-    }
+    public var id = UUID()
 
-    var name: String
-    var author: String
-    var text: String
+    public let name: String
+    public let author: String
+    public let text: String
 
     public init(name: String, author: String, text: String) {
         self.name = name
@@ -36,10 +34,19 @@ public struct License: Identifiable {
         self.text = text
     }
 
+    public init(_ name: String, author: String, text: String) {
+        self.init(name: name, author: author, text: text)
+    }
+
     public init(name: String, author: String, filename: String) {
         self.name = name
         self.author = author
         self.text = String(contentsOfBundleFile: filename)!
     }
+
+    public init(_ name: String, author: String, filename: String) {
+        self.init(name: name, author: author, filename: filename)
+    }
+
 
 }
