@@ -56,6 +56,7 @@ struct MacLicenseView: View {
             .background(Color.textBackgroundColor)
         }
         .background(Color.textBackgroundColor)
+        .navigationTitle(license.name)
     }
 
 }
