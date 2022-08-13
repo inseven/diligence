@@ -25,6 +25,8 @@ import SwiftUI
 @available(iOS 16, *, macOS 13, *)
 struct Hyperlink: ViewModifier {
 
+    @State var isHovering = false
+
     var action: () -> Void
 
     func body(content: Content) -> some View {
@@ -33,8 +35,10 @@ struct Hyperlink: ViewModifier {
             .underline()
             .foregroundColor(.accentColor)
             .onTapGesture(perform: action)
+            .brightness(isHovering ? 0.2 : 0.0)
 #if os(macOS)
             .onHover { inside in
+                isHovering = inside
                 if inside {
                     NSCursor.pointingHand.push()
                 } else {
