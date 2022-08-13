@@ -30,6 +30,11 @@ public struct LicenseSection: View {
         self.licenses = licenses
     }
 
+    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
+        self.title = title
+        self.licenses = licenses()
+    }
+
     public var body: some View {
         Section(header: title != nil ? Text(title ?? "") : nil) {
             ForEach(licenses) { license in

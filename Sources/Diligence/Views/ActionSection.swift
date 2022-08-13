@@ -20,34 +20,22 @@
 
 import SwiftUI
 
-public struct CreditSection: View {
+public struct ActionSection: View {
 
-    private var title: String?
-    private var credits: [Credit]
+    private var actions: [Action]
 
-    public init(_ title: String? = nil, _ people: [String]) {
-        self.title = title
-        self.credits = people.map { Credit($0) }
+    public init(_ actions: [Action]) {
+        self.actions = actions
     }
 
-    public init(_ title: String? = nil, _ credits: [Credit]) {
-        self.title = title
-        self.credits = credits
-    }
-
-    public init(_ title: String? = nil, @CreditsBuilder credits: () -> [Credit]) {
-        self.title = title
-        self.credits = credits()
+    public init(@ActionsBuilder actions: () -> [Action]) {
+        self.actions = actions()
     }
 
     public var body: some View {
-        Section(header: title != nil ? Text(title!) : nil) {
-            ForEach(credits) { credit in
-                if let url = credit.url {
-                    Link(credit.name, url: url)
-                } else {
-                    Text(credit.name)
-                }
+        Section {
+            ForEach(actions) { action in
+                Link(action.title, url: action.url)
             }
         }
     }
