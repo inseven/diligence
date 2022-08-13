@@ -33,6 +33,7 @@ struct Hyperlink: ViewModifier {
             .underline()
             .foregroundColor(.accentColor)
             .onTapGesture(perform: action)
+#if os(macOS)
             .onHover { inside in
                 if inside {
                     NSCursor.pointingHand.push()
@@ -40,6 +41,7 @@ struct Hyperlink: ViewModifier {
                     NSCursor.pop()
                 }
             }
+#endif
     }
 
 }

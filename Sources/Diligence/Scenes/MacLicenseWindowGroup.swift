@@ -20,7 +20,7 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
+#if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
 struct MacLicenseWindowGroup: Scene {
