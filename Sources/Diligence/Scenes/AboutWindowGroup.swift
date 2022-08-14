@@ -23,6 +23,9 @@ import SwiftUI
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
+public typealias About = AboutWindowGroup
+
+@available(macOS 13, *)
 public struct AboutWindowGroup: Scene {
 
     private let repository: String?
@@ -42,6 +45,9 @@ public struct AboutWindowGroup: Scene {
 
     public var body: some Scene {
         MacAboutWindow(repository: repository, actions: actions, acknowledgements: acknowledgements, licenses: licenses)
+            .commands {
+                AboutCommands()
+            }
         MacLicenseWindowGroup(licenses: licenses)
     }
 
