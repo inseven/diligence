@@ -83,6 +83,7 @@ struct MacAboutView: View {
                 }
                 .textSelection(.enabled)
             }
+            Divider()
             HStack {
                 Text("Version \(Bundle.main.version ?? "") (\(Bundle.main.build ?? ""))")
                     .foregroundColor(.secondary)
