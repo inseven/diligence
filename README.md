@@ -22,6 +22,10 @@ Diligence is a lightweight Swift package with a collection UI controls for build
 #### macOS
 
 ```swift
+import SwiftUI
+
+import Diligence
+
 @main
 struct BookmarksApp: App {
 
