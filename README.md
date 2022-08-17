@@ -1,6 +1,6 @@
 # Diligence
 
-About screens for macOS and iOS
+SwiftUI about screens for macOS and iOS
 
 ## Overview
 
