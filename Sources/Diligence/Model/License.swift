@@ -38,14 +38,14 @@ public struct License: Identifiable {
         self.init(name: name, author: author, text: text)
     }
 
-    public init(name: String, author: String, filename: String) {
+    public init(name: String, author: String, filename: String, bundle: Bundle = Bundle.main) {
         self.name = name
         self.author = author
-        self.text = String(contentsOfBundleFile: filename)!
+        self.text = String(contentsOfBundleFile: filename, bundle: bundle)!
     }
 
-    public init(_ name: String, author: String, filename: String) {
-        self.init(name: name, author: author, filename: filename)
+    public init(_ name: String, author: String, filename: String, bundle: Bundle = Bundle.main) {
+        self.init(name: name, author: author, filename: filename, bundle: bundle)
     }
 
 

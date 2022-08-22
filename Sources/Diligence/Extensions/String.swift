@@ -22,8 +22,8 @@ import SwiftUI
 
 public extension String {
 
-    init?(contentsOfBundleFile filename: String) {
-        guard let path = Bundle.main.path(forResource: filename, ofType: nil) else {
+    init?(contentsOfBundleFile filename: String, bundle: Bundle = Bundle.main) {
+        guard let path = bundle.path(forResource: filename, ofType: nil) else {
             return nil
         }
         try? self.init(contentsOfFile: path)
