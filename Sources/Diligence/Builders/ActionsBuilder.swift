@@ -20,6 +20,10 @@
 
 import Foundation
 
+public protocol ActionsConvertible {
+    func asActions() -> [Action]
+}
+
 @resultBuilder public struct ActionsBuilder {
 
     public static func buildBlock() -> [Action] {
@@ -28,6 +32,19 @@ import Foundation
 
     public static func buildBlock(_ actions: Action...) -> [Action] {
         return actions
+    }
+
+    public static func buildBlock(_ values: ActionsConvertible...) -> [Action] {
+        return values
+            .flatMap { $0.asActions() }
+    }
+
+}
+
+extension Array: ActionsConvertible where Element == Action {
+
+    public func asActions() -> [Action] {
+        return self
     }
 
 }

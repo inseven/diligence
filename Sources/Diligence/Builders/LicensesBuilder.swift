@@ -20,6 +20,10 @@
 
 import Foundation
 
+public protocol LicensesConvertible {
+    func asLicenses() -> [License]
+}
+
 @resultBuilder public struct LicensesBuilder {
 
     public static func buildBlock() -> [License] {
@@ -28,6 +32,19 @@ import Foundation
 
     public static func buildBlock(_ licenses: License...) -> [License] {
         return licenses
+    }
+
+    public static func buildBlock(_ values: LicensesConvertible...) -> [License] {
+        return values
+            .flatMap { $0.asLicenses() }
+    }
+
+}
+
+extension Array: LicensesConvertible where Element == License {
+
+    public func asLicenses() -> [License] {
+        return self
     }
 
 }

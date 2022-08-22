@@ -20,6 +20,10 @@
 
 import Foundation
 
+public protocol AcknowledgementsConvertible {
+    func asAcknowledgements() -> [Acknowledgements]
+}
+
 @resultBuilder public struct AcknowledgementsBuilder {
 
     public static func buildBlock() -> [Acknowledgements] {
@@ -28,6 +32,19 @@ import Foundation
 
     public static func buildBlock(_ acknowledgements: Acknowledgements...) -> [Acknowledgements] {
         return acknowledgements
+    }
+
+    public static func buildBlock(_ values: AcknowledgementsConvertible...) -> [Acknowledgements] {
+        return values
+            .flatMap { $0.asAcknowledgements() }
+    }
+
+}
+
+extension Array: AcknowledgementsConvertible where Element == Acknowledgements {
+
+    public func asAcknowledgements() -> [Acknowledgements] {
+        return self
     }
 
 }
