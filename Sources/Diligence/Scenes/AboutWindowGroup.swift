@@ -29,25 +29,32 @@ public typealias About = AboutWindowGroup
 public struct AboutWindowGroup: Scene {
 
     private let repository: String?
+    private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
 
     public init(repository: String? = nil,
+                copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
                 @LicensesBuilder licenses: () -> [License] = { [] }) {
         self.repository = repository
+        self.copyright = copyright
         self.actions = actions()
         self.acknowledgements = acknowledgements()
         self.licenses = licenses()
     }
 
     public var body: some Scene {
-        MacAboutWindow(repository: repository, actions: actions, acknowledgements: acknowledgements, licenses: licenses)
-            .commands {
-                AboutCommands()
-            }
+        MacAboutWindow(repository: repository,
+                       copyright: copyright,
+                       actions: actions,
+                       acknowledgements: acknowledgements,
+                       licenses: licenses)
+        .commands {
+            AboutCommands()
+        }
         MacLicenseWindowGroup(licenses: licenses)
     }
 

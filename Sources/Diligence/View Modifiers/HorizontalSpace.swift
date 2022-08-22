@@ -20,33 +20,45 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
+public struct HorizontalSpace: ViewModifier {
 
-@available(macOS 13, *)
-struct MacAboutSection<Content: View>: View {
+    public struct Edge: OptionSet {
+        public let rawValue: UInt
 
-    var title: String?
-    var content: Content
+        public static let leading = Edge(rawValue: 1 << 0)
+        public static let trailing = Edge(rawValue: 1 << 1)
 
-    public init(_ title: String? = nil, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
+        public static let both: Edge = [.leading, .trailing]
+
+        public init(rawValue: UInt) {
+            self.rawValue = rawValue
+        }
     }
 
-    var body: some View {
+    var edges: Edge = .both
+
+    public init(_ edges: Edge) {
+        self.edges = edges
+    }
+
+    public func body(content: Content) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4.0) {
-                if let title = title {
-                    Text(title)
-                        .fontWeight(.bold)
-                }
-                content
+            if edges.contains(.leading) {
+                Spacer()
             }
-            Spacer()
+            content
+            if edges.contains(.trailing) {
+                Spacer()
+            }
         }
-        .padding(.bottom)
     }
 
 }
 
-#endif
+public extension View {
+
+    func horizontalSpace(_ edges: HorizontalSpace.Edge) -> some View {
+        return modifier(HorizontalSpace(edges))
+    }
+
+}

@@ -20,33 +20,33 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
+struct PaddingWithMultiplier: ViewModifier {
 
-@available(macOS 13, *)
-struct MacAboutSection<Content: View>: View {
+    var edges: Edge.Set
+    var multiplier: Int
 
-    var title: String?
-    var content: Content
-
-    public init(_ title: String? = nil, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
+    init(_ edges: Edge.Set, multiplier: Int) {
+        self.edges = edges
+        self.multiplier = multiplier
     }
 
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4.0) {
-                if let title = title {
-                    Text(title)
-                        .fontWeight(.bold)
-                }
-                content
-            }
-            Spacer()
+    func body(content: Content) -> some View {
+        if multiplier <= 1 {
+            content
+                .padding(edges)
+        } else {
+            content
+                .modifier(PaddingWithMultiplier(edges, multiplier: multiplier - 1))
+                .padding(edges)
         }
-        .padding(.bottom)
     }
 
 }
 
-#endif
+extension View {
+
+    func padding(_ edges: Edge.Set, multiplier: Int) -> some View {
+        return modifier(PaddingWithMultiplier(edges, multiplier: multiplier))
+    }
+
+}

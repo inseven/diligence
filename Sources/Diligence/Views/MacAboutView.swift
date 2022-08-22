@@ -29,12 +29,14 @@ struct MacAboutView: View {
     @Environment(\.openWindow) private var openWindow
 
     private let repository: String?
+    private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
 
-    init(repository: String? = nil, actions: [Action], acknowledgements: [Acknowledgements], licenses: [License]) {
+    init(repository: String? = nil, copyright: String? = nil, actions: [Action], acknowledgements: [Acknowledgements], licenses: [License]) {
         self.repository = repository
+        self.copyright = copyright
         self.actions = actions
         self.acknowledgements = acknowledgements
         self.licenses = licenses
@@ -47,15 +49,18 @@ struct MacAboutView: View {
                     MacIcon("Icon")
                     Spacer()
                 }
-                .padding()
-                .padding([.horizontal])
+                .padding(.all, multiplier: 2)
                 ScrollView {
                     VStack {
-                        HStack {
+                        VStack(spacing: 8.0) {
                             ApplicationNameTitle()
-                            Spacer()
+                                .horizontalSpace(.trailing)
+                            if let copyright = copyright {
+                                Text(copyright)
+                                    .horizontalSpace(.trailing)
+                            }
                         }
-                        .padding(.bottom, 2.0)
+                        .padding(.bottom)
                         if !acknowledgements.isEmpty {
                             ForEach(acknowledgements) { acknowledgements in
                                 MacAboutSection(acknowledgements.title) {
@@ -83,10 +88,12 @@ struct MacAboutView: View {
                             }
                         }
                     }
-                    .padding(.top)
+                    .padding(.top, multiplier: 2)
+                    .padding(.bottom)
                 }
                 .textSelection(.enabled)
             }
+            .background(Color.textBackgroundColor)
             Divider()
             HStack {
                 Text("Version \(Bundle.main.version ?? "") (\(Bundle.main.build ?? ""))")

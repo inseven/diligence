@@ -33,15 +33,18 @@ struct MacAboutWindow: Scene {
     static let windowID = "diligence-about-window"
 
     private let repository: String?
+    private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
 
     init(repository: String? = nil,
+         copyright: String? = nil,
          actions: [Action],
          acknowledgements: [Acknowledgements],
          licenses: [License]) {
         self.repository = repository
+        self.copyright = copyright
         self.actions = actions
         self.acknowledgements = acknowledgements
         self.licenses = licenses
@@ -50,14 +53,15 @@ struct MacAboutWindow: Scene {
     var body: some Scene {
         Window("About", id: Self.windowID) {
             MacAboutView(repository: repository,
+                         copyright: copyright,
                          actions: actions,
                          acknowledgements: acknowledgements,
                          licenses: licenses)
             .frame(width: LayoutMetrics.width, height: LayoutMetrics.height)
+            .navigationTitle("About \(Bundle.main.preferredName ?? "")")
         }
         .windowResizability(.contentSize)
         .defaultPosition(.center)
-        .windowStyle(.hiddenTitleBar)
     }
 
 }
