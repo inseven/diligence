@@ -56,26 +56,30 @@ struct MacAboutView: View {
                             Spacer()
                         }
                         .padding(.bottom, 2.0)
-                        ForEach(acknowledgements) { acknowledgements in
-                            MacAboutSection(acknowledgements.title) {
-                                ForEach(acknowledgements.credits) { credit in
-                                    if let url = credit.url {
-                                        Text(credit.name)
-                                            .hyperlink {
-                                                openURL(url)
-                                            }
-                                    } else {
-                                        Text(credit.name)
+                        if !acknowledgements.isEmpty {
+                            ForEach(acknowledgements) { acknowledgements in
+                                MacAboutSection(acknowledgements.title) {
+                                    ForEach(acknowledgements.credits) { credit in
+                                        if let url = credit.url {
+                                            Text(credit.name)
+                                                .hyperlink {
+                                                    openURL(url)
+                                                }
+                                        } else {
+                                            Text(credit.name)
+                                        }
                                     }
                                 }
                             }
                         }
-                        MacAboutSection("Licenses") {
-                            ForEach(licenses) { license in
-                                Text(license.name)
-                                    .hyperlink {
-                                        openWindow(id: MacLicenseWindowGroup.windowID, value: license.id)
-                                    }
+                        if !licenses.isEmpty {
+                            MacAboutSection("Licenses") {
+                                ForEach(licenses) { license in
+                                    Text(license.name)
+                                        .hyperlink {
+                                            openWindow(id: MacLicenseWindowGroup.windowID, value: license.id)
+                                        }
+                                }
                             }
                         }
                     }

@@ -35,8 +35,8 @@ public struct AboutWindowGroup: Scene {
 
     public init(repository: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
-                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements],
-                @LicensesBuilder licenses: () -> [License]) {
+                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                @LicensesBuilder licenses: () -> [License] = { [] }) {
         self.repository = repository
         self.actions = actions()
         self.acknowledgements = acknowledgements()
