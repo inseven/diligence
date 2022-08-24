@@ -28,6 +28,8 @@ public typealias About = AboutWindowGroup
 @available(macOS 13, *)
 public struct AboutWindowGroup: Scene {
 
+    static private let diligenceLicense = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
+
     private let repository: String?
     private let copyright: String?
     private let actions: [Action]
@@ -43,7 +45,9 @@ public struct AboutWindowGroup: Scene {
         self.copyright = copyright
         self.actions = actions()
         self.acknowledgements = acknowledgements()
-        self.licenses = licenses()
+        self.licenses = (licenses() + [Self.diligenceLicense]).sorted {
+            $0.name.localizedCompare($1.name) == .orderedAscending
+        }
     }
 
     public var body: some Scene {
