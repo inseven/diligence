@@ -59,7 +59,13 @@ public struct BuildSection<Header: View>: View {
                 Button {
                     openURL(url)
                 } label: {
-                    LabeledContent("Commit", value: commit)
+                    HStack {
+                        Text("Commit")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text(commit)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
         }
