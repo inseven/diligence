@@ -23,46 +23,15 @@ import SwiftUI
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
-struct MacLicenseView: View {
+class NSLicenseWindow: NSWindow {
 
-    private struct LayoutMetrics {
-        static let width = 400.0
-        static let height = 500.0
-    }
+    var license: License! = nil
 
-    var license: License
-
-    var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text("Author")
-                    Spacer()
-                    Text(license.author)
-                        .foregroundColor(.secondary)
-                }
-                Divider()
-                Text(license.text)
-            }
-            .padding()
-        }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                Divider()
-                HStack {
-                    Spacer()
-                    Button("Copy") {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(license.text, forType: .string)
-                    }
-                }
-                .padding()
-            }
-            .background(Color.textBackgroundColor)
-        }
-        .background(Color.textBackgroundColor)
-        .navigationTitle(license.name)
-        .frame(width: LayoutMetrics.width, height: LayoutMetrics.height)
+    convenience init(license: License) {
+        let licenseView = MacLicenseView(license: license)
+        self.init(contentViewController: NSHostingController(rootView: licenseView))
+        self.license = license
+        self.title = license.name
     }
 
 }

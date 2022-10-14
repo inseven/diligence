@@ -33,7 +33,6 @@ struct MacLicenseWindowGroup: Scene {
         WindowGroup(id: Self.windowID, for: License.ID.self) { $licenseId in
             if let license = licenses.first(where: { $0.id == licenseId }) {
                 MacLicenseView(license: license)
-                    .frame(width: 400, height: 500)
             }
         }
         .windowResizability(.contentSize)

@@ -43,12 +43,32 @@ public struct MacAboutView: View {
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
+    private let usesAppKit: Bool
+
+    func openLicenseWindow(_ license: License) {
+
+        // Check to see if the window is already open and activate it if it is.
+        for window in NSApplication.shared.windows {
+            guard let licenseWindow = window as? NSLicenseWindow else {
+                continue
+            }
+            if licenseWindow.license.id == license.id {
+                window.makeKeyAndOrderFront(nil)
+                return
+            }
+        }
+
+        // If not, create a new license window.
+        let window = NSLicenseWindow(license: license)
+        window.makeKeyAndOrderFront(nil)
+    }
 
     init(repository: String? = nil,
          copyright: String? = nil,
          actions: [Action],
          acknowledgements: [Acknowledgements],
-         licenses: [License]) {
+         licenses: [License],
+         usesAppKit: Bool = false) {
         self.repository = repository
         self.copyright = copyright
         self.actions = actions
@@ -56,18 +76,21 @@ public struct MacAboutView: View {
         self.licenses = (licenses + [Self.diligenceLicense]).sorted {
             $0.name.localizedCompare($1.name) == .orderedAscending
         }
+        self.usesAppKit = usesAppKit
     }
 
     public init(repository: String? = nil,
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] }) {
+                @LicensesBuilder licenses: () -> [License] = { [] },
+                usesAppKit: Bool = false) {
         self.init(repository: repository,
                   copyright: copyright,
                   actions: actions(),
                   acknowledgements: acknowledgements(),
-                  licenses: licenses())
+                  licenses: licenses(),
+                  usesAppKit: usesAppKit)
     }
 
     public var body: some View {
@@ -110,7 +133,11 @@ public struct MacAboutView: View {
                                 ForEach(licenses) { license in
                                     Text(license.name)
                                         .hyperlink {
-                                            openWindow(id: MacLicenseWindowGroup.windowID, value: license.id)
+                                            if usesAppKit {
+                                                openLicenseWindow(license)
+                                            } else {
+                                                openWindow(id: MacLicenseWindowGroup.windowID, value: license.id)
+                                            }
                                         }
                                 }
                             }
