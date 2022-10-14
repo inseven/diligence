@@ -23,41 +23,8 @@ import SwiftUI
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
-struct MacAboutWindow: Scene {
+public typealias AboutView = MacAboutView
 
-    static let windowID = "diligence-about-window"
-
-    private let repository: String?
-    private let copyright: String?
-    private let actions: [Action]
-    private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
-
-    init(repository: String? = nil,
-         copyright: String? = nil,
-         actions: [Action],
-         acknowledgements: [Acknowledgements],
-         licenses: [License]) {
-        self.repository = repository
-        self.copyright = copyright
-        self.actions = actions
-        self.acknowledgements = acknowledgements
-        self.licenses = licenses
-    }
-
-    var body: some Scene {
-        Window("About", id: Self.windowID) {
-            MacAboutView(repository: repository,
-                         copyright: copyright,
-                         actions: actions,
-                         acknowledgements: acknowledgements,
-                         licenses: licenses)
-            .navigationTitle(Bundle.main.aboutWindowTitle)
-        }
-        .windowResizability(.contentSize)
-        .defaultPosition(.center)
-    }
-
-}
+#elseif os(iOS)
 
 #endif

@@ -77,5 +77,8 @@ extension Bundle {
             .appendingPathComponent(commit)
     }
 
+    public var aboutWindowTitle: String {
+        return "About \(Bundle.main.preferredName ?? "")"
+    }
 
 }

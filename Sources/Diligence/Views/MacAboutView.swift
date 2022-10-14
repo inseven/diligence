@@ -23,7 +23,12 @@ import SwiftUI
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
-struct MacAboutView: View {
+public struct MacAboutView: View {
+
+    private struct LayoutMetrics {
+        static let width = 600.0
+        static let height = 360.0
+    }
 
     @Environment(\.openURL) private var openURL
     @Environment(\.openWindow) private var openWindow
@@ -42,7 +47,19 @@ struct MacAboutView: View {
         self.licenses = licenses
     }
 
-    var body: some View {
+    public init(repository: String? = nil,
+                copyright: String? = nil,
+                @ActionsBuilder actions: () -> [Action],
+                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                @LicensesBuilder licenses: () -> [License] = { [] }) {
+        self.init(repository: repository,
+                  copyright: copyright,
+                  actions: actions(),
+                  acknowledgements: acknowledgements(),
+                  licenses: licenses())
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 VStack {
@@ -116,6 +133,7 @@ struct MacAboutView: View {
             }
             .padding()
         }
+        .frame(width: LayoutMetrics.width, height: LayoutMetrics.height)
     }
 
 }
