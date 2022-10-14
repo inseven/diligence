@@ -25,7 +25,10 @@ import SwiftUI
 @available(macOS 13, *)
 public struct MacAboutView: View {
 
-    static private let diligenceLicense = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
+    static private let diligenceLicense = License("Diligence",
+                                                  author: "InSeven Limited",
+                                                  filename: "LICENSE",
+                                                  bundle: .module)
 
     private struct LayoutMetrics {
         static let width = 600.0
@@ -41,7 +44,11 @@ public struct MacAboutView: View {
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
 
-    init(repository: String? = nil, copyright: String? = nil, actions: [Action], acknowledgements: [Acknowledgements], licenses: [License]) {
+    init(repository: String? = nil,
+         copyright: String? = nil,
+         actions: [Action],
+         acknowledgements: [Acknowledgements],
+         licenses: [License]) {
         self.repository = repository
         self.copyright = copyright
         self.actions = actions
