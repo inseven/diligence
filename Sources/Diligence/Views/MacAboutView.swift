@@ -25,6 +25,8 @@ import SwiftUI
 @available(macOS 13, *)
 public struct MacAboutView: View {
 
+    static private let diligenceLicense = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
+
     private struct LayoutMetrics {
         static let width = 600.0
         static let height = 360.0
@@ -44,7 +46,9 @@ public struct MacAboutView: View {
         self.copyright = copyright
         self.actions = actions
         self.acknowledgements = acknowledgements
-        self.licenses = licenses
+        self.licenses = (licenses + [Self.diligenceLicense]).sorted {
+            $0.name.localizedCompare($1.name) == .orderedAscending
+        }
     }
 
     public init(repository: String? = nil,
