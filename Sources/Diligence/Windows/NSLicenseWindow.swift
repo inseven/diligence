@@ -32,6 +32,8 @@ class NSLicenseWindow: NSWindow {
         self.init(contentViewController: NSHostingController(rootView: licenseView))
         self.license = license
         self.title = license.name
+        self.styleMask.remove(.resizable)
+        self.styleMask.remove(.miniaturizable)
     }
 
 }
