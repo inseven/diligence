@@ -161,6 +161,9 @@ public struct MacAboutView: View {
                         .hyperlink {
                             openURL(url)
                         }
+                } else if let commit = Bundle.main.commit {
+                    Text(commit)
+                        .foregroundColor(.secondary)
                 }
                 Spacer()
                 ForEach(actions) { action in
