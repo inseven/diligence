@@ -15,7 +15,7 @@ Diligence is a lightweight Swift package with a collection UI controls for build
 | ![anytime](images/anytime-iOS.png) | ![statuspanel](images/statuspanel-iOS.png) | ![opl](images/opl-iOS.png) |
 
 ### macOS
-<img src="images/Bookmarks-macOS.png" width="712" height="500" />
+<img src="images/Fileaway-macOS.png" width="712" />
 
 ## Usage
 
