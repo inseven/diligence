@@ -48,10 +48,19 @@ public struct BuildSection<Header: View>: View {
 
     public var body: some View {
         Section(header: header) {
-            LabeledContent("Version", value: Bundle.main.version ?? "")
-            LabeledContent("Build", value: Bundle.main.build ?? "")
+            LabeledContent("Version") {
+                Text(Bundle.main.version ?? "")
+                    .textSelection(.enabled)
+            }
+            LabeledContent("Build") {
+                Text(Bundle.main.build ?? "")
+                    .textSelection(.enabled)
+            }
             if let date = date {
-                LabeledContent("Date", value: date)
+                LabeledContent("Date") {
+                    Text(date)
+                        .textSelection(.enabled)
+                }
             }
             if let project = project,
                let url = Bundle.main.commitUrl(for: project),
@@ -65,6 +74,7 @@ public struct BuildSection<Header: View>: View {
                         Spacer()
                         Text(commit)
                             .foregroundColor(.secondary)
+                            .textSelection(.enabled)
                     }
                 }
             }
