@@ -22,6 +22,6 @@ import Foundation
 
 public struct Legal {
 
-    static private let license = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
+    static let license = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
 
 }

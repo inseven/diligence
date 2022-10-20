@@ -27,4 +27,6 @@ public typealias AboutView = MacAboutView
 
 #elseif os(iOS)
 
+public typealias AboutView = PhoneAboutView
+
 #endif

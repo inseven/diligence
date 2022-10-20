@@ -19,7 +19,40 @@ Diligence is a lightweight Swift package with a collection UI controls for build
 
 ## Usage
 
-#### macOS
+### iOS
+
+```swift
+AboutView {
+  Action("InSeven Limited", url: URL(string: "https://inseven.co.uk")!)
+  Action("Privacy Policy", url: URL(string: "https://anytime.world/privacy-policy")!)
+  Action("Support", url: URL(address: "support@anytime.world", subject: "Anytime Support")!)
+} acknowledgements: {
+  Acknowledgements("Contributors") {
+    Credit("Jason Morley", url: URL(string: "https://jbmorley.co.uk"))
+    Credit("Pavlos Vinieratos", url: URL(string: "https://github.com/pvinis"))
+    Credit("Sarah Barbour")
+  }
+  Acknowledgements("Graphics") {
+    Credit("Anna Wilk")
+  }
+  Acknowledgements("Thanks") {
+    Credit("Blake Merryman")
+    Credit("Joanne Wong")
+    Credit("Johannes Weiß")
+    Credit("Lukas Fittl")
+    Credit("Michael Dales")
+    Credit("Michi Spevacek")
+    Credit("Mike Rhodes")
+    Credit("Sara Frederixon")
+    Credit("Terrence Talbot")
+    Credit("Tom Sutcliffe")
+  }
+} licenses: {
+  License("Introspect", author: "Timber Software", filename: "introspect-license")
+}
+```
+
+### macOS
 
 ```swift
 import SwiftUI
