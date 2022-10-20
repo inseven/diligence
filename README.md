@@ -101,4 +101,3 @@ struct BookmarksApp: App {
 Diligence currently makes some assumptions that will be addressed in future updates:
 
 - Diligence expects to find an image asset named "Icon" in your application's main bundle containing your icon.
-- License files should be resources on your apps main bundle.
