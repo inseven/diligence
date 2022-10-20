@@ -20,7 +20,7 @@
 
 import SwiftUI
 
-public struct HorizontalSpace: ViewModifier {
+struct HorizontalSpace: ViewModifier {
 
     public struct Edge: OptionSet {
         public let rawValue: UInt
@@ -55,7 +55,7 @@ public struct HorizontalSpace: ViewModifier {
 
 }
 
-public extension View {
+extension View {
 
     func horizontalSpace(_ edges: HorizontalSpace.Edge) -> some View {
         return modifier(HorizontalSpace(edges))
