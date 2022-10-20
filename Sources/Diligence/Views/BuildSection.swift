@@ -62,18 +62,24 @@ public struct BuildSection<Header: View>: View {
                         .textSelection(.enabled)
                 }
             }
-            if let project = project,
-               let url = Bundle.main.commitUrl(for: project),
-               let commit = Bundle.main.commit {
-                Button {
-                    openURL(url)
-                } label: {
-                    HStack {
-                        Text("Commit")
-                            .foregroundColor(.primary)
-                        Spacer()
+            if let commit = Bundle.main.commit {
+                if let project = project,
+                   let url = Bundle.main.commitUrl(for: project){
+                    Button {
+                        openURL(url)
+                    } label: {
+                        HStack {
+                            Text("Commit")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(commit)
+                                .foregroundColor(.secondary)
+                                .textSelection(.enabled)
+                        }
+                    }
+                } else {
+                    LabeledContent("Commit") {
                         Text(commit)
-                            .foregroundColor(.secondary)
                             .textSelection(.enabled)
                     }
                 }
