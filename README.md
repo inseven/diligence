@@ -17,6 +17,45 @@ Diligence is a lightweight Swift package with a collection UI controls for build
 ### macOS
 <img src="images/Fileaway-macOS.png" width="712" />
 
+## Build Numbers
+
+Diligence supports build numbers conforming to the following structure:
+
+```
+YYmmddHHMMxxxxxxxx
+```
+
+- `YY` -- two-digit year
+- `mm` -- month
+- `dd` -- day
+- `HH` -- hours (24h)
+- `MM` -- minutes
+- `xxxxxxxx` -- zero-padded integer representation of a 6-character commit SHA
+
+These build numbers are guaranteed to be always incrementing and, as such, safe to be used for iOS and macOS apps while also encoding the build date and commit.
+
+If Diligence detects a build number in this format, it will display this additional information in the about screen.
+
+#### Generating Build Numbers
+
+Diligence comes with a Swift command-line script that can be used to generate suitable build numbers. From the root Diligence directory, run the following command:
+
+```bash
+scripts/build-number.swift
+221021001716408432
+```
+
+This can be injected into your project build by building from the command line and setting the `CURRENT_PROJECT_VERSION` environment variable. For example, the command line to archive a release build for the TinyBoard project is as follows:
+
+```bash
+BUILD_NUMBER=`diligence/scripts/build-number.swift`
+xcode_project \
+    -scheme "TinyBoard" \
+    -config Release \
+    CURRENT_PROJECT_VERSION=$BUILD_NUMBER \
+    archive
+```
+
 ## Usage
 
 ### iOS
