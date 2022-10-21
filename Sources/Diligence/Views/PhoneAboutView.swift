@@ -52,7 +52,15 @@ public struct PhoneAboutView: View {
             Form {
                 HeaderSection {
                     Icon("Icon")
-                    ApplicationNameTitle()
+                    if let copyright = copyright {
+                        ApplicationNameTitle()
+                            .padding(.bottom)
+                        Text(copyright)
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                    } else {
+                        ApplicationNameTitle()
+                    }
                 }
                 BuildSection(repository)
                 ActionSection(actions)
