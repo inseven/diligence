@@ -58,6 +58,7 @@ public struct PhoneAboutView: View {
                         Text(copyright)
                             .foregroundColor(.secondary)
                             .font(.subheadline)
+                            .multilineTextAlignment(.center)
                     } else {
                         ApplicationNameTitle()
                     }
