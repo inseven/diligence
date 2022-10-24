@@ -84,6 +84,7 @@ public struct PhoneAboutView: View {
 
             }
         }
+        .navigationViewStyle(.stack)
     }
 
 }
