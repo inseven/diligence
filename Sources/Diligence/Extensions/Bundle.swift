@@ -50,6 +50,7 @@ extension Bundle {
         }
         let dateString = String(build.prefix(10))
         let inputDateFormatter = DateFormatter()
+        inputDateFormatter.locale = Locale(identifier: "en_US_POSIX")
         inputDateFormatter.dateFormat = "yyMMddHHmm"
         inputDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return inputDateFormatter.date(from: dateString)

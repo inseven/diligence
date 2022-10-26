@@ -18,6 +18,7 @@ func shell(_ command: String) -> String {
 
 let now = Date()
 let dateFormatter = DateFormatter()
+dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 dateFormatter.dateFormat = "yyMMddHHmm"
 dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 let dateValue = dateFormatter.string(from: now)
