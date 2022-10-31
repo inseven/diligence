@@ -1,0 +1,7 @@
+version: 1
+builder:
+  configs:
+    - platform: ios
+      documentation_targets: [Diligence]
+    - platform: macos
+      documentation_targets: [Diligence]
