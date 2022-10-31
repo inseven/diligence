@@ -1,6 +1,8 @@
 # Diligence
 
-SwiftUI about screens for macOS and iOS
+[![build](https://github.com/inseven/diligence/actions/workflows/build.yaml/badge.svg)](https://github.com/inseven/diligence/actions/workflows/build.yaml)
+
+SwiftUI about screens for iOS and macOS
 
 ## Overview
 
