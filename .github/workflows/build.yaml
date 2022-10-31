@@ -12,7 +12,7 @@ jobs:
   test:
 
     name: build
-    runs-on: macOS-ventura
+    runs-on: macos-ventura
 
     steps:
 
