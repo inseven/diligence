@@ -68,7 +68,7 @@ public struct MacAboutView: View {
         self.copyright = copyright
         self.actions = actions
         self.acknowledgements = acknowledgements
-        self.licenses = (licenses + [Legal.license]).sorted {
+        self.licenses = licenses.includingDiligenceLicense().sorted {
             $0.name.localizedCompare($1.name) == .orderedAscending
         }
         self.usesAppKit = usesAppKit

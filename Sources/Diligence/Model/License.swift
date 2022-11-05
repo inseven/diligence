@@ -20,13 +20,17 @@
 
 import Foundation
 
-public struct License: Identifiable {
+public struct License: Identifiable, Hashable {
 
     public var id = UUID()
 
     public let name: String
     public let author: String
     public let text: String
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 
     public init(name: String, author: String, text: String) {
         self.name = name
@@ -48,5 +52,14 @@ public struct License: Identifiable {
         self.init(name: name, author: author, filename: filename, bundle: bundle)
     }
 
+
+}
+
+extension Array where Element == License {
+
+    /// Return an array ensuing the built-in Diligence license exists, and exists only once in the array.
+    func includingDiligenceLicense() -> Array<License> {
+        return Array(Set(self + [Legal.license]))
+    }
 
 }

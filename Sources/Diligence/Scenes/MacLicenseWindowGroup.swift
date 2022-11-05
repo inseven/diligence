@@ -31,7 +31,7 @@ struct MacLicenseWindowGroup: Scene {
 
     var body: some Scene {
         WindowGroup(id: Self.windowID, for: License.ID.self) { $licenseId in
-            if let license = licenses.first(where: { $0.id == licenseId }) {
+            if let license = licenses.includingDiligenceLicense().first(where: { $0.id == licenseId }) {
                 MacLicenseView(license: license)
             }
         }
