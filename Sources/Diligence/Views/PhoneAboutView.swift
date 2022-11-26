@@ -18,11 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import Combine
 import SwiftUI
 
 #if compiler(>=5.7) && os(iOS)
 
 public struct PhoneAboutView: View {
+
+    private struct LayoutMetrics {
+        static let headerVisibilityThreshold = 30.0
+    }
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -31,6 +36,8 @@ public struct PhoneAboutView: View {
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
     private let licenses: [License]
+
+    @State var isHeaderVisible: Bool = true
 
     public init(repository: String? = nil,
                 copyright: String? = nil,
@@ -51,16 +58,19 @@ public struct PhoneAboutView: View {
         NavigationView {
             Form {
                 HeaderSection {
-                    Icon("Icon")
-                    if let copyright = copyright {
+                    VStack {
+                        Icon("Icon")
                         ApplicationNameTitle()
-                            .padding(.bottom)
+                    }
+                    .opacity(isHeaderVisible ? 1.0 : 0.0)
+                    .isVisibleInScrollView($isHeaderVisible, threshold: LayoutMetrics.headerVisibilityThreshold)
+
+                    if let copyright = copyright {
                         Text(copyright)
                             .foregroundColor(.secondary)
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
-                    } else {
-                        ApplicationNameTitle()
+                            .padding(.top)
                     }
                 }
                 BuildSection(repository)
@@ -72,6 +82,14 @@ public struct PhoneAboutView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text(Bundle.main.preferredName ?? "")
+                            .fontWeight(.bold)
+                            .opacity(isHeaderVisible ? 0.0 : 1.0)
+                    }
+                }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
