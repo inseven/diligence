@@ -18,21 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-#if compiler(>=5.7) && os(macOS)
+public struct Contents {
 
-@available(macOS 13, *)
-public typealias About = AboutWindowGroup
-
-@available(macOS 13, *)
-public struct AboutWindowGroup: Scene {
-
-    private let repository: String?
-    private let copyright: String?
-    private let actions: [Action]
-    private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
+    let repository: String?
+    let copyright: String?
+    let actions: [Action]
+    let acknowledgements: [Acknowledgements]
+    let licenses: [License]
 
     public init(repository: String? = nil,
                 copyright: String? = nil,
@@ -43,29 +37,9 @@ public struct AboutWindowGroup: Scene {
         self.copyright = copyright
         self.actions = actions()
         self.acknowledgements = acknowledgements()
-        self.licenses = licenses()
-    }
-
-    public init(_ contents: Contents) {
-        self.repository = contents.repository
-        self.copyright = contents.copyright
-        self.actions = contents.actions
-        self.acknowledgements = contents.acknowledgements
-        self.licenses = contents.licenses
-    }
-
-    public var body: some Scene {
-        MacAboutWindow(repository: repository,
-                       copyright: copyright,
-                       actions: actions,
-                       acknowledgements: acknowledgements,
-                       licenses: licenses)
-        .commands {
-            AboutCommands()
+        self.licenses = (licenses() + [Legal.license]).sorted {
+            $0.name.localizedCompare($1.name) == .orderedAscending
         }
-        MacLicenseWindowGroup(licenses: licenses)
     }
 
 }
-
-#endif
