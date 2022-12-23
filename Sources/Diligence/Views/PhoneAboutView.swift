@@ -54,6 +54,14 @@ public struct PhoneAboutView: View {
         }
     }
 
+    public init(_ contents: Contents) {
+        self.repository = contents.repository
+        self.copyright = contents.copyright
+        self.actions = contents.actions
+        self.acknowledgements = contents.acknowledgements
+        self.licenses = contents.licenses
+    }
+
     public var body: some View {
         NavigationView {
             Form {
