@@ -52,6 +52,12 @@ public struct License: Identifiable, Hashable {
         self.init(name: name, author: author, filename: filename, bundle: bundle)
     }
 
+    public init(_ name: String, author: String, url: URL) {
+        self.name = name
+        self.author = author
+        self.text = try! String(contentsOf: url)
+    }
+
 
 }
 
