@@ -58,7 +58,6 @@ public struct License: Identifiable, Hashable {
         self.text = try! String(contentsOf: url)
     }
 
-
 }
 
 extension Array where Element == License {
