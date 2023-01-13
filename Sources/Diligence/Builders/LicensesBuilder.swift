@@ -39,6 +39,14 @@ public protocol LicensesConvertible {
             .flatMap { $0.asLicenses() }
     }
 
+    public static func buildExpression(_ expression: License) -> [License] {
+        return [expression]
+    }
+
+    public static func buildArray(_ components: [[License]]) -> [License] {
+        return Array(components.joined())
+    }
+
 }
 
 extension Array: LicensesConvertible where Element == License {
