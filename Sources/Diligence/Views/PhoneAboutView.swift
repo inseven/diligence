@@ -71,7 +71,7 @@ public struct PhoneAboutView: View {
         self.copyright = contents.copyright
         self.actions = contents.actions
         self.acknowledgements = contents.acknowledgements
-        self.licenseGroups = [LicenseGroup("Licenses", licenses: contents.licenses)]
+        self.licenseGroups = contents.licenseGroups
     }
 
     public var body: some View {
