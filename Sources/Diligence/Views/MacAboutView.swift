@@ -76,14 +76,14 @@ public struct MacAboutView: View {
          copyright: String? = nil,
          actions: [Action],
          acknowledgements: [Acknowledgements],
-         licenses: [License],
+         licenseGroups: [LicenseGroup],
          usesAppKit: Bool = false) {
-        self.init(repository: repository,
-                  copyright: copyright,
-                  actions: actions,
-                  acknowledgements: acknowledgements,
-                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) },
-                  usesAppKit: usesAppKit)
+        self.repository = repository
+        self.copyright = copyright
+        self.actions = actions
+        self.acknowledgements = acknowledgements
+        self.licenseGroups = licenseGroups
+        self.usesAppKit = usesAppKit
     }
 
     public init(repository: String? = nil,
