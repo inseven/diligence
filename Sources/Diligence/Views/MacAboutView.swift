@@ -37,7 +37,7 @@ public struct MacAboutView: View {
     private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
+    private let licenseGroups: [LicenseGroup]
     private let usesAppKit: Bool
 
     func openLicenseWindow(_ license: License) {
@@ -58,20 +58,32 @@ public struct MacAboutView: View {
         window.makeKeyAndOrderFront(nil)
     }
 
+    public init(repository: String? = nil,
+                copyright: String? = nil,
+                @ActionsBuilder actions: () -> [Action] = { [] },
+                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                @LicenseGroupsBuilder licenses: () -> [LicenseGroup] = { [ ] },
+                usesAppKit: Bool = false) {
+        self.repository = repository
+        self.copyright = copyright
+        self.actions = actions()
+        self.acknowledgements = acknowledgements()
+        self.licenseGroups = licenses()
+        self.usesAppKit = usesAppKit
+    }
+
     init(repository: String? = nil,
          copyright: String? = nil,
          actions: [Action],
          acknowledgements: [Acknowledgements],
          licenses: [License],
          usesAppKit: Bool = false) {
-        self.repository = repository
-        self.copyright = copyright
-        self.actions = actions
-        self.acknowledgements = acknowledgements
-        self.licenses = licenses.includingDiligenceLicense().sorted {
-            $0.name.localizedCompare($1.name) == .orderedAscending
-        }
-        self.usesAppKit = usesAppKit
+        self.init(repository: repository,
+                  copyright: copyright,
+                  actions: actions,
+                  acknowledgements: acknowledgements,
+                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) },
+                  usesAppKit: usesAppKit)
     }
 
     public init(repository: String? = nil,
@@ -123,9 +135,9 @@ public struct MacAboutView: View {
                                 }
                             }
                         }
-                        if !licenses.isEmpty {
-                            MacAboutSection("Licenses") {
-                                ForEach(licenses) { license in
+                        ForEach(licenseGroups) { licenseGroup in
+                            MacAboutSection(licenseGroup.title) {
+                                ForEach(licenseGroup.licenses) { license in
                                     Text(license.name)
                                         .hyperlink {
                                             if usesAppKit {

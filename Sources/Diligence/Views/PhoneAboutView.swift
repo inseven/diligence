@@ -62,9 +62,8 @@ public struct PhoneAboutView: View {
                   copyright: copyright,
                   actions: actions,
                   acknowledgements: acknowledgements,
-                  licenses: {
-            LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses())
-        }, usesAppKit: usesAppKit)
+                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) },
+                  usesAppKit: usesAppKit)
     }
 
     public init(_ contents: Contents) {

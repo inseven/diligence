@@ -27,12 +27,11 @@ public struct LicenseSection: View {
 
     public init(_ title: String? = nil, _ licenses: [License]) {
         self.title = title
-        self.licenses = licenses
+        self.licenses = licenses.sorted()
     }
 
     public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
-        self.title = title
-        self.licenses = licenses()
+        self.init(title, licenses())
     }
 
     public var body: some View {
