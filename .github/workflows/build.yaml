@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: scripts/install-dependencies.sh
 
-    - name: Build
+    - name: Build and test
       run: exec ./scripts/build.sh
 
     - name: Release
