@@ -43,7 +43,7 @@ public struct AboutWindowGroup: Scene {
         self.copyright = copyright
         self.actions = actions()
         self.acknowledgements = acknowledgements()
-        self.licenseGroups = licenseGroups
+        self.licenseGroups = licenses()
     }
 
     public init(repository: String? = nil,
@@ -51,11 +51,6 @@ public struct AboutWindowGroup: Scene {
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
                 @LicensesBuilder licenses: () -> [License] = { [] }) {
-        self.repository = repository
-        self.copyright = copyright
-        self.actions = actions()
-        self.acknowledgements = acknowledgements()
-        self.licenses = licenses()
         self.init(repository: repository,
                   copyright: copyright,
                   actions: actions,

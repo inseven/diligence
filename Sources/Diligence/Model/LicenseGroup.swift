@@ -20,7 +20,7 @@
 
 import SwiftUI
 
-public struct LicenseGroup: Identifiable {
+public struct LicenseGroup: Identifiable, Equatable {
 
     public let id = UUID()
 

@@ -94,9 +94,9 @@ public struct MacAboutView: View {
                 usesAppKit: Bool = false) {
         self.init(repository: repository,
                   copyright: copyright,
-                  actions: actions(),
-                  acknowledgements: acknowledgements(),
-                  licenses: licenses(),
+                  actions: actions,
+                  acknowledgements: acknowledgements,
+                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) },
                   usesAppKit: usesAppKit)
     }
 

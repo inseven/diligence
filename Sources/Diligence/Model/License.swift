@@ -64,7 +64,7 @@ extension Array where Element == License {
 
     /// Return an array ensuing the built-in Diligence license exists, and exists only once in the array.
     func includingDiligenceLicense() -> [License] {
-        return Array(Set(self + [Legal.license]))
+        return self + [Legal.license]
     }
 
     /// Sort licenses alphabetically by name.
