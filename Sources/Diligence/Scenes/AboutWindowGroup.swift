@@ -32,18 +32,30 @@ public struct AboutWindowGroup: Scene {
     private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
+    private let licenseGroups: [LicenseGroup]
+
+    public init(repository: String? = nil,
+                copyright: String? = nil,
+                @ActionsBuilder actions: () -> [Action],
+                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                @LicenseGroupsBuilder licenses: () -> [LicenseGroup] = { [] }) {
+        self.repository = repository
+        self.copyright = copyright
+        self.actions = actions()
+        self.acknowledgements = acknowledgements()
+        self.licenseGroups = licenses()
+    }
 
     public init(repository: String? = nil,
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
                 @LicensesBuilder licenses: () -> [License] = { [] }) {
-        self.repository = repository
-        self.copyright = copyright
-        self.actions = actions()
-        self.acknowledgements = acknowledgements()
-        self.licenses = licenses()
+        self.init(repository: repository,
+                  copyright: copyright,
+                  actions: actions,
+                  acknowledgements: acknowledgements,
+                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) })
     }
 
     public init(_ contents: Contents) {
@@ -51,7 +63,7 @@ public struct AboutWindowGroup: Scene {
         self.copyright = contents.copyright
         self.actions = contents.actions
         self.acknowledgements = contents.acknowledgements
-        self.licenses = contents.licenses
+        self.licenseGroups = contents.licenseGroups
     }
 
     public var body: some Scene {
@@ -59,11 +71,11 @@ public struct AboutWindowGroup: Scene {
                        copyright: copyright,
                        actions: actions,
                        acknowledgements: acknowledgements,
-                       licenses: licenses)
+                       licenseGroups: licenseGroups)
         .commands {
             AboutCommands()
         }
-        MacLicenseWindowGroup(licenses: licenses)
+        MacLicenseWindowGroup(licenses: licenseGroups.flatMap { $0.licenses })
     }
 
 }

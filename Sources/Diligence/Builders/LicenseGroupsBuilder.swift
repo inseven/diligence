@@ -18,28 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-public struct LicenseSection: View {
+public protocol LicenseGroupsConvertible {
+    func asLicenseGroups() -> [LicenseGroup]
+}
 
-    var title: String?
-    var licenses: [License]
+@resultBuilder public struct LicenseGroupsBuilder {
 
-    public init(_ title: String? = nil, _ licenses: [License]) {
-        self.title = title
-        self.licenses = licenses.sorted()
+    public static func buildBlock() -> [LicenseGroup] {
+        return []
     }
 
-    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
-        self.init(title, licenses())
+    public static func buildBlock(_ licenseGroup: LicenseGroup...) -> [LicenseGroup] {
+        return licenseGroup
     }
 
-    public var body: some View {
-        Section(header: title != nil ? Text(title ?? "") : nil) {
-            ForEach(licenses) { license in
-                LicenseRow(license)
-            }
-        }
+    public static func buildBlock(_ values: LicenseGroupsConvertible...) -> [LicenseGroup] {
+        return values
+            .flatMap { $0.asLicenseGroups() }
+    }
+
+}
+
+extension Array: LicenseGroupsConvertible where Element == LicenseGroup {
+
+    public func asLicenseGroups() -> [LicenseGroup] {
+        return self
     }
 
 }

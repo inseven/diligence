@@ -35,7 +35,7 @@ public struct PhoneAboutView: View {
     private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
+    private let licenseGroups: [LicenseGroup]
 
     @State var isHeaderVisible: Bool = true
 
@@ -43,15 +43,27 @@ public struct PhoneAboutView: View {
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action] = { [] },
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] },
+                @LicenseGroupsBuilder licenses: () -> [LicenseGroup] = { [ ] },
                 usesAppKit: Bool = false) {
         self.repository = repository
         self.copyright = copyright
         self.actions = actions()
         self.acknowledgements = acknowledgements()
-        self.licenses = (licenses() + [Legal.license]).sorted {
-            $0.name.localizedCompare($1.name) == .orderedAscending
-        }
+        self.licenseGroups = licenses()
+    }
+
+    public init(repository: String? = nil,
+                copyright: String? = nil,
+                @ActionsBuilder actions: () -> [Action] = { [] },
+                @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                @LicensesBuilder licenses: () -> [License] = { [] },
+                usesAppKit: Bool = false) {
+        self.init(repository: repository,
+                  copyright: copyright,
+                  actions: actions,
+                  acknowledgements: acknowledgements,
+                  licenses: { LicenseGroup("Licenses", includeDiligenceLicense: true, licenses: licenses()) },
+                  usesAppKit: usesAppKit)
     }
 
     public init(_ contents: Contents) {
@@ -59,7 +71,7 @@ public struct PhoneAboutView: View {
         self.copyright = contents.copyright
         self.actions = contents.actions
         self.acknowledgements = contents.acknowledgements
-        self.licenses = contents.licenses
+        self.licenseGroups = contents.licenseGroups
     }
 
     public var body: some View {
@@ -86,7 +98,9 @@ public struct PhoneAboutView: View {
                 ForEach(acknowledgements.filter { !$0.credits.isEmpty }) { acknowledgement in
                     CreditSection(acknowledgement.title, acknowledgement.credits)
                 }
-                LicenseSection("Licenses", licenses)
+                ForEach(licenseGroups) { licenseGroup in
+                    LicenseSection(licenseGroup.title, licenseGroup.licenses)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

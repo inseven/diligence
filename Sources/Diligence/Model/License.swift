@@ -63,8 +63,15 @@ public struct License: Identifiable, Hashable {
 extension Array where Element == License {
 
     /// Return an array ensuing the built-in Diligence license exists, and exists only once in the array.
-    func includingDiligenceLicense() -> Array<License> {
-        return Array(Set(self + [Legal.license]))
+    func includingDiligenceLicense() -> [License] {
+        return self + [Legal.license]
+    }
+
+    /// Sort licenses alphabetically by name.
+    func sorted() -> [License] {
+        return sorted {
+            $0.name.localizedCompare($1.name) == .orderedAscending
+        }
     }
 
 }

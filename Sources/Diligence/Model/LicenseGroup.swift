@@ -20,26 +20,24 @@
 
 import SwiftUI
 
-public struct LicenseSection: View {
+public struct LicenseGroup: Identifiable, Equatable {
 
-    var title: String?
-    var licenses: [License]
+    public let id = UUID()
 
-    public init(_ title: String? = nil, _ licenses: [License]) {
+    let title: String
+    let licenses: [License]
+
+    public init(_ title: String, includeDiligenceLicense: Bool = false, licenses: [License]) {
         self.title = title
-        self.licenses = licenses.sorted()
-    }
-
-    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
-        self.init(title, licenses())
-    }
-
-    public var body: some View {
-        Section(header: title != nil ? Text(title ?? "") : nil) {
-            ForEach(licenses) { license in
-                LicenseRow(license)
-            }
+        if includeDiligenceLicense {
+            self.licenses = licenses.includingDiligenceLicense()
+        } else {
+            self.licenses = licenses
         }
+    }
+
+    public init(_ title: String, includeDiligenceLicense: Bool = false, @LicensesBuilder licenses: () -> [License]) {
+        self.init(title, includeDiligenceLicense: includeDiligenceLicense, licenses: licenses())
     }
 
 }

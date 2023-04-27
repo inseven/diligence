@@ -31,18 +31,18 @@ struct MacAboutWindow: Scene {
     private let copyright: String?
     private let actions: [Action]
     private let acknowledgements: [Acknowledgements]
-    private let licenses: [License]
+    private let licenseGroups: [LicenseGroup]
 
     init(repository: String? = nil,
          copyright: String? = nil,
          actions: [Action],
          acknowledgements: [Acknowledgements],
-         licenses: [License]) {
+         licenseGroups: [LicenseGroup]) {
         self.repository = repository
         self.copyright = copyright
         self.actions = actions
         self.acknowledgements = acknowledgements
-        self.licenses = licenses
+        self.licenseGroups = licenseGroups
     }
 
     var body: some Scene {
@@ -51,7 +51,7 @@ struct MacAboutWindow: Scene {
                          copyright: copyright,
                          actions: actions,
                          acknowledgements: acknowledgements,
-                         licenses: licenses)
+                         licenseGroups: licenseGroups)
             .navigationTitle(Bundle.main.aboutWindowTitle)
         }
         .windowResizability(.contentSize)
