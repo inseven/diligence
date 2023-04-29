@@ -20,28 +20,16 @@
 
 import SwiftUI
 
-struct LicenseView: View {
+public struct NamedURL: Identifiable, Equatable {
 
-    private var license: License
+    public var id = UUID()
 
-    init(_ license: License) {
-        self.license = license
-    }
+    let name: String
+    let url: URL
 
-    var body: some View {
-        List {
-            LabeledContent("Author", value: license.author)
-            ForEach(license.attributes) { attribute in
-                Link(attribute.name, url: attribute.url)
-            }
-            Text(license.text)
-                .textSelection(.enabled)
-                .padding(.top, 8)
-        }
-        .listStyle(PlainListStyle())
-#if os(iOS)
-        .navigationBarTitle(license.name, displayMode: .inline)
-#endif
+    public init(_ name: String, url: URL) {
+        self.name = name
+        self.url = url
     }
 
 }
