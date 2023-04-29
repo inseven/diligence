@@ -23,6 +23,7 @@ import SwiftUI
 public struct Link: View {
 
     @Environment(\.openURL) private var openURL
+    @Environment(\.prefersTextualRepresentation) private var prefersTextualRepresentation
 
     private let text: String
     private let url: URL
@@ -48,8 +49,18 @@ public struct Link: View {
             openURL(url)
         } label: {
             LabeledContent(text) {
-                Image(systemName: image)
+                if #available(iOS 16, *, macOS 13) {
+                    ViewThatFits(in: .horizontal) {
+                        if prefersTextualRepresentation {
+                            Text(url.absoluteString)
+                        }
+                        Image(systemName: image)
+                    }
                     .foregroundColor(.secondary)
+                } else {
+                    Image(systemName: image)
+                        .foregroundColor(.secondary)
+                }
             }
         }
         .foregroundColor(.primary)

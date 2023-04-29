@@ -20,29 +20,25 @@
 
 import SwiftUI
 
-struct LicenseView: View {
+struct PrefersTextualRepresentationEnvironmentKey: EnvironmentKey {
 
-    private var license: License
+    public static var defaultValue: Bool = false
 
-    init(_ license: License) {
-        self.license = license
+}
+
+extension EnvironmentValues {
+
+    public var prefersTextualRepresentation: Bool {
+        get { self[PrefersTextualRepresentationEnvironmentKey.self] }
+        set { self[PrefersTextualRepresentationEnvironmentKey.self] = newValue }
     }
 
-    var body: some View {
-        List {
-            LabeledContent("Author", value: license.author)
-            ForEach(license.attributes) { attribute in
-                Link(attribute.name, url: attribute.url)
-            }
-            .prefersTextualRepresentation()
-            Text(license.text)
-                .textSelection(.enabled)
-                .padding(.top, 8)
-        }
-        .listStyle(PlainListStyle())
-#if os(iOS)
-        .navigationBarTitle(license.name, displayMode: .inline)
-#endif
+}
+
+extension View {
+
+    func prefersTextualRepresentation(_ prefersTextualRepresentation: Bool = true) -> some View {
+        return environment(\.prefersTextualRepresentation, true)
     }
 
 }

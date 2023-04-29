@@ -27,34 +27,42 @@ public struct License: Identifiable, Hashable {
     public let name: String
     public let author: String
     public let text: String
+    public let attributes: [NamedURL]
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 
-    public init(name: String, author: String, text: String) {
+    public init(name: String, author: String, attributes: [NamedURL] = [], text: String) {
         self.name = name
         self.author = author
+        self.attributes = attributes
         self.text = text
     }
 
-    public init(_ name: String, author: String, text: String) {
-        self.init(name: name, author: author, text: text)
+    public init(_ name: String, author: String, attributes: [NamedURL] = [], text: String) {
+        self.init(name: name, author: author, attributes: attributes, text: text)
     }
 
-    public init(name: String, author: String, filename: String, bundle: Bundle = Bundle.main) {
+    public init(name: String, author: String, attributes: [NamedURL] = [], filename: String, bundle: Bundle = Bundle.main) {
         self.name = name
         self.author = author
+        self.attributes = attributes
         self.text = String(contentsOfBundleFile: filename, bundle: bundle)!
     }
 
-    public init(_ name: String, author: String, filename: String, bundle: Bundle = Bundle.main) {
-        self.init(name: name, author: author, filename: filename, bundle: bundle)
+    public init(_ name: String,
+                author: String,
+                attributes: [NamedURL] = [],
+                filename: String,
+                bundle: Bundle = Bundle.main) {
+        self.init(name: name, author: author, attributes: attributes, filename: filename, bundle: bundle)
     }
 
-    public init(_ name: String, author: String, url: URL) {
+    public init(_ name: String, author: String, attributes: [NamedURL] = [], url: URL) {
         self.name = name
         self.author = author
+        self.attributes = attributes
         self.text = try! String(contentsOf: url)
     }
 
