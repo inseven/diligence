@@ -49,7 +49,7 @@ public struct Link: View {
             openURL(url)
         } label: {
             LabeledContent(text) {
-                if #available(iOS 16, *) {
+                if #available(iOS 16, *, macOS 13) {
                     ViewThatFits(in: .horizontal) {
                         if prefersTextualRepresentation {
                             Text(url.absoluteString)
