@@ -64,8 +64,8 @@ final class DiligenceTests: XCTestCase {
         }
         XCTAssertEqual(licenseGroup.title, "Fonts")
         XCTAssertEquivalent(licenseGroup.licenses, [
+            License("Four", author: "Five", text: "Six"),
             License("One", author: "Two", text: "Three"),
-            License("Four", author: "Five", text: "Six")
         ])
 
     }
@@ -78,9 +78,9 @@ final class DiligenceTests: XCTestCase {
         }
         XCTAssertEqual(licenseGroup.title, "Fonts")
         XCTAssertEquivalent(licenseGroup.licenses, [
-            License("One", author: "Two", text: "Three"),
+            Diligence.Legal.license,
             License("Four", author: "Five", text: "Six"),
-            Diligence.Legal.license
+            License("One", author: "Two", text: "Three"),
         ])
     }
 
