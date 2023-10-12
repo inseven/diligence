@@ -18,26 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-public struct LicenseGroup: Identifiable, Equatable {
+extension Array where Element == License {
 
-    public let id = UUID()
-
-    let title: String
-    let licenses: [License]
-
-    public init(_ title: String, includeDiligenceLicense: Bool = false, licenses: [License]) {
-        self.title = title
-        if includeDiligenceLicense {
-            self.licenses = licenses.includingDiligenceLicense().sortedByName()
-        } else {
-            self.licenses = licenses.sortedByName()
+    func sortedByName() -> [License] {
+        return sorted { lhs, rhs in
+            return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
         }
-    }
-
-    public init(_ title: String, includeDiligenceLicense: Bool = false, @LicensesBuilder licenses: () -> [License]) {
-        self.init(title, includeDiligenceLicense: includeDiligenceLicense, licenses: licenses())
     }
 
 }
