@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2024 InSeven Limited
+// Copyright (c) 2018-2024 Jason Morley
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,6 @@ import Foundation
 
 struct Legal {
 
-    static let license = License("Diligence", author: "InSeven Limited", filename: "LICENSE", bundle: .module)
+    static let license = License("Diligence", author: "Jason Morley", filename: "LICENSE", bundle: .module)
 
 }
