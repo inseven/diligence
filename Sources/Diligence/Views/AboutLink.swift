@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+#if compiler(>=5.7) && os(macOS)
+
 @available(macOS 13.0, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
@@ -48,3 +50,5 @@ public struct AboutLink<Label>: View where Label: View {
     }
 
 }
+
+#endif
