@@ -14,7 +14,7 @@ let package = Package(
             targets: ["Diligence"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/inseven/licensable", from: "0.0.8"),
+        .package(url: "https://github.com/inseven/licensable", from: "0.0.9"),
     ],
     targets: [
         .target(
