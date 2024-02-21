@@ -25,7 +25,6 @@ import Licensable
 public struct LicenseGroup: Identifiable, Equatable {
 
     public static func == (lhs: LicenseGroup, rhs: LicenseGroup) -> Bool {
-        // TODO: Do we need more?
         return lhs.id == rhs.id
     }
 
@@ -37,9 +36,9 @@ public struct LicenseGroup: Identifiable, Equatable {
     public init(_ title: String, includeDiligenceLicense: Bool = false, licenses: [Licensable]) {
         self.title = title
         if includeDiligenceLicense {
-            self.licenses = licenses.includingDiligenceLicense().sortedByName().map({ AnyLicensable($0) })
+            self.licenses = licenses.includingDiligenceLicense().flatten().sortedByName().eraseToAnyLicensable()
         } else {
-            self.licenses = licenses.sortedByName().map({ AnyLicensable($0) })
+            self.licenses = licenses.flatten().sortedByName().eraseToAnyLicensable()
         }
     }
 

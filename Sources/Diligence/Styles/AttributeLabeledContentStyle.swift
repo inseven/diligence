@@ -18,10 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-struct Legal {
+#if compiler(>=5.7) && os(macOS)
 
-    static let license = License("Diligence", author: "Jason Morley", filename: "LICENSE", bundle: .module)
+struct AttributeLabeledContentStyle: LabeledContentStyle {
+
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.label
+            Spacer()
+            configuration.content
+                .foregroundColor(.secondary)
+                .textSelection(.enabled)
+        }
+    }
 
 }
+
+@available(macOS 13, *)
+extension LabeledContentStyle where Self == AttributeLabeledContentStyle {
+
+    static var attribute: AttributeLabeledContentStyle {
+        return AttributeLabeledContentStyle()
+    }
+
+}
+
+#endif

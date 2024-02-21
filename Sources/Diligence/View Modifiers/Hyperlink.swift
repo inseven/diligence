@@ -20,9 +20,6 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
-
-@available(iOS 16, *, macOS 13, *)
 struct Hyperlink: ViewModifier {
 
     @State var isHovering = false
@@ -32,7 +29,7 @@ struct Hyperlink: ViewModifier {
     func body(content: Content) -> some View {
         content
             .textSelection(.disabled)
-            .underline()
+            .prefersUnderline()
             .foregroundColor(.accentColor)
             .onTapGesture(perform: action)
             .brightness(isHovering ? 0.2 : 0.0)
@@ -50,7 +47,6 @@ struct Hyperlink: ViewModifier {
 
 }
 
-@available(iOS 16, *, macOS 13, *)
 extension View {
 
     func hyperlink(_ perform: @escaping () -> Void) -> some View {
@@ -58,5 +54,3 @@ extension View {
     }
 
 }
-
-#endif

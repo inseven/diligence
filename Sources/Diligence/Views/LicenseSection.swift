@@ -29,8 +29,7 @@ public struct LicenseSection: View {
 
     public init(_ title: String? = nil, _ licenses: [Licensable]) {
         self.title = title
-        // TODO: Convenience map
-        self.licenses = licenses.sorted().map({ AnyLicensable($0) })
+        self.licenses = licenses.flatten().sortedByName().eraseToAnyLicensable()
     }
 
     public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {

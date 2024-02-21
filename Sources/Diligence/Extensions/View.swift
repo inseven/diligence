@@ -20,35 +20,17 @@
 
 import SwiftUI
 
-import Licensable
+extension View {
 
-struct LicenseView: View {
-
-    private var license: Licensable
-
-    init(_ license: Licensable) {
-        self.license = license
-    }
-
-    var body: some View {
-        List {
-            LabeledContent("Author", value: license.author)
-            ForEach(license.attributes) { attribute in
-                switch attribute.value {
-                case .text(let text):
-                    LabeledContent(attribute.name, value: text)
-                case .url(let url):
-                    Link(attribute.name, url: url)
-                }
-            }
-            .prefersTextualRepresentation()
-            Text(license.text)
-                .textSelection(.enabled)
-                .padding(.top, 8)
+    func prefersUnderline() -> some View {
+#if compiler(>=5.7)
+        if #available(macOS 13.0, *) {
+            return underline()
+        } else {
+            return self
         }
-        .listStyle(PlainListStyle())
-#if os(iOS)
-        .navigationBarTitle(license.name, displayMode: .inline)
+#else
+        return self
 #endif
     }
 

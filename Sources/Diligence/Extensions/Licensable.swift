@@ -18,38 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import SwiftUI
+import Foundation
 
 import Licensable
 
-struct LicenseView: View {
+extension Licensable where Self == License {
 
-    private var license: Licensable
-
-    init(_ license: Licensable) {
-        self.license = license
-    }
-
-    var body: some View {
-        List {
-            LabeledContent("Author", value: license.author)
-            ForEach(license.attributes) { attribute in
-                switch attribute.value {
-                case .text(let text):
-                    LabeledContent(attribute.name, value: text)
-                case .url(let url):
-                    Link(attribute.name, url: url)
-                }
-            }
-            .prefersTextualRepresentation()
-            Text(license.text)
-                .textSelection(.enabled)
-                .padding(.top, 8)
-        }
-        .listStyle(PlainListStyle())
-#if os(iOS)
-        .navigationBarTitle(license.name, displayMode: .inline)
-#endif
+    public static var diligence: License {
+        let licenseURL = Bundle.module.url(forResource: "LICENSE", withExtension: nil)!
+        return License(id: "https://github.com/inseven/diligence",
+                       name: "Diligence",
+                       author: "Jsaon Morley",
+                       text: try! String(contentsOf: licenseURL))
     }
 
 }

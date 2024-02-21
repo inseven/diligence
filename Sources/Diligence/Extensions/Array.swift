@@ -24,6 +24,12 @@ import Licensable
 
 extension Array where Element == Licensable {
 
+    /// Return an array ensuing the built-in Diligence license exists, and exists only once in the array.
+    func includingDiligenceLicense() -> [Licensable] {
+        return self + [.diligence]
+    }
+
+    /// Sort licenses alphabetically by name.
     func sortedByName() -> [Licensable] {
         return sorted { lhs, rhs in
             return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
