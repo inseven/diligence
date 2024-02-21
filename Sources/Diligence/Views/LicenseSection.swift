@@ -20,14 +20,37 @@
 
 import SwiftUI
 
+import Licensable
+
+// TODO:
+
+struct AnyLicensable: Identifiable, Licensable {
+
+    let id: String
+    let name: String
+    let author: String
+    let text: String
+    let attributes: [Attribute]
+
+    init<T: Licensable>(_ licensable: T) {
+        id = licensable.id
+        name = licensable.name
+        author = licensable.author
+        text = licensable.text
+        attributes = licensable.attributes
+    }
+
+}
+
 public struct LicenseSection: View {
 
     var title: String?
-    var licenses: [License]
+    var licenses: [AnyLicensable]
 
-    public init(_ title: String? = nil, _ licenses: [License]) {
+    public init(_ title: String? = nil, _ licenses: [Licensable]) {
         self.title = title
-        self.licenses = licenses.sorted()
+        // TODO: Convenience map
+        self.licenses = licenses.sorted().map({ AnyLicensable($0) })
     }
 
     public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {

@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -40,7 +42,7 @@ public struct MacAboutView: View {
     private let licenseGroups: [LicenseGroup]
     private let usesAppKit: Bool
 
-    func openLicenseWindow(_ license: License) {
+    func openLicenseWindow(_ license: Licensable) {
 
         // Check to see if the window is already open and activate it if it is.
         for window in NSApplication.shared.windows {

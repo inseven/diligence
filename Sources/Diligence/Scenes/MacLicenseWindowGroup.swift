@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -27,7 +29,7 @@ struct MacLicenseWindowGroup: Scene {
 
     static let windowID = "diligence-license-window"
 
-    let licenses: [License]
+    let licenses: [Licensable]
 
     var body: some Scene {
         WindowGroup(id: Self.windowID, for: License.ID.self) { $licenseId in

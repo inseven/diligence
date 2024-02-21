@@ -20,38 +20,40 @@
 
 import Foundation
 
+import Licensable
+
 public protocol LicensesConvertible {
-    func asLicenses() -> [License]
+    func asLicenses() -> [Licensable]
 }
 
 @resultBuilder public struct LicensesBuilder {
 
-    public static func buildBlock() -> [License] {
+    public static func buildBlock() -> [Licensable] {
         return []
     }
 
-    public static func buildBlock(_ licenses: License...) -> [License] {
+    public static func buildBlock(_ licenses: Licensable...) -> [Licensable] {
         return licenses
     }
 
-    public static func buildBlock(_ values: LicensesConvertible...) -> [License] {
+    public static func buildBlock(_ values: LicensesConvertible...) -> [Licensable] {
         return values
             .flatMap { $0.asLicenses() }
     }
 
-    public static func buildExpression(_ expression: License) -> [License] {
+    public static func buildExpression(_ expression: Licensable) -> [Licensable] {
         return [expression]
     }
 
-    public static func buildArray(_ components: [[License]]) -> [License] {
+    public static func buildArray(_ components: [[Licensable]]) -> [Licensable] {
         return Array(components.joined())
     }
 
 }
 
-extension Array: LicensesConvertible where Element == License {
+extension Array: LicensesConvertible where Element == Licensable {
 
-    public func asLicenses() -> [License] {
+    public func asLicenses() -> [Licensable] {
         return self
     }
 

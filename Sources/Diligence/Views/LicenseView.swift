@@ -20,11 +20,13 @@
 
 import SwiftUI
 
+import Licensable
+
 struct LicenseView: View {
 
-    private var license: License
+    private var license: Licensable
 
-    init(_ license: License) {
+    init(_ license: Licensable) {
         self.license = license
     }
 
@@ -32,7 +34,8 @@ struct LicenseView: View {
         List {
             LabeledContent("Author", value: license.author)
             ForEach(license.attributes) { attribute in
-                Link(attribute.name, url: attribute.url)
+                Text("AN ATTRIBUTE")
+//                Link(attribute.name, url: attribute.url)
             }
             .prefersTextualRepresentation()
             Text(license.text)

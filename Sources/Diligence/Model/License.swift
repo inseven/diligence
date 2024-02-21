@@ -20,14 +20,45 @@
 
 import Foundation
 
-public struct License: Identifiable, Hashable {
+import Licensable
 
-    public var id = UUID()
+// TODO: Attributes need to be identifiable
+
+extension Attribute: Identifiable {
+
+    public var id: String {
+        return name
+    }
+
+}
+
+// TODO: Implement this
+
+extension Attribute.Value {
+
+    public static func == (lhs: Attribute.Value, rhs: Attribute.Value) -> Bool {
+        // TODO: THIS IS WRONG
+        return true
+    }
+
+}
+
+extension Attribute: Equatable {
+
+    public static func == (lhs: Attribute, rhs: Attribute) -> Bool {
+        return lhs.name == rhs.name && lhs.value == rhs.value
+    }
+
+}
+
+public struct License: Identifiable, Hashable, Licensable {
+
+    public var id = UUID().uuidString
 
     public let name: String
     public let author: String
     public let text: String
-    public let attributes: [NamedURL]
+    public let attributes: [Attribute]
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -36,7 +67,9 @@ public struct License: Identifiable, Hashable {
     public init(name: String, author: String, attributes: [NamedURL] = [], text: String) {
         self.name = name
         self.author = author
-        self.attributes = attributes
+        self.attributes = attributes.map { namedURL in
+            return .url(namedURL.url, title: namedURL.name)
+        }
         self.text = text
     }
 
@@ -47,7 +80,9 @@ public struct License: Identifiable, Hashable {
     public init(name: String, author: String, attributes: [NamedURL] = [], filename: String, bundle: Bundle = Bundle.main) {
         self.name = name
         self.author = author
-        self.attributes = attributes
+        self.attributes = attributes.map { namedURL in
+            return .url(namedURL.url, title: namedURL.name)
+        }
         self.text = String(contentsOfBundleFile: filename, bundle: bundle)!
     }
 
@@ -62,21 +97,31 @@ public struct License: Identifiable, Hashable {
     public init(_ name: String, author: String, attributes: [NamedURL] = [], url: URL) {
         self.name = name
         self.author = author
-        self.attributes = attributes
+        self.attributes = attributes.map { namedURL in
+            return .url(namedURL.url, title: namedURL.name)
+        }
         self.text = try! String(contentsOf: url)
     }
 
 }
 
-extension Array where Element == License {
+extension License {
+
+    public init(_ licensable: Licensable) {
+        self.init(licensable.name, author: licensable.author, text: licensable.text)
+    }
+
+}
+
+extension Array where Element == Licensable {
 
     /// Return an array ensuing the built-in Diligence license exists, and exists only once in the array.
-    func includingDiligenceLicense() -> [License] {
+    func includingDiligenceLicense() -> [Licensable] {
         return self + [Legal.license]
     }
 
     /// Sort licenses alphabetically by name.
-    func sorted() -> [License] {
+    func sorted() -> [Licensable] {
         return sorted {
             $0.name.localizedCompare($1.name) == .orderedAscending
         }

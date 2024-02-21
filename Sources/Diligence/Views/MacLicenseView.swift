@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -30,7 +32,7 @@ struct MacLicenseView: View {
         static let height = 500.0
     }
 
-    var license: License
+    var license: Licensable
 
     var body: some View {
         ScrollView {

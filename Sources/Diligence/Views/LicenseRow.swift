@@ -20,13 +20,15 @@
 
 import SwiftUI
 
+import Licensable
+
 public struct LicenseRow: View {
 
-    var license: License
+    var license: Licensable
 
     @State var isShowingDetails = false
 
-    public init(_ license: License) {
+    public init(_ license: Licensable) {
         self.license = license
     }
 

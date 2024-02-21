@@ -20,14 +20,16 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
 class NSLicenseWindow: NSWindow {
 
-    var license: License! = nil
+    var license: Licensable! = nil
 
-    convenience init(license: License) {
+    convenience init(license: Licensable) {
         let licenseView = MacLicenseView(license: license)
         self.init(contentViewController: NSHostingController(rootView: licenseView))
         self.license = license
