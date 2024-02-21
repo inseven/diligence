@@ -24,7 +24,7 @@ extension View {
 
     func prefersUnderline() -> some View {
 #if compiler(>=5.7)
-        if #available(macOS 13.0, *) {
+        if #available(macOS 13.0, iOS 16.0, *) {
             return underline()
         } else {
             return self

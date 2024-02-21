@@ -21,6 +21,8 @@
 import Combine
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(iOS)
 
 public struct PhoneAboutView: View {
