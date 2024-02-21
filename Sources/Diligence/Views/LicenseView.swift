@@ -24,6 +24,12 @@ import Licensable
 
 struct LicenseView: View {
 
+    struct LayoutMetrics {
+        static let textPadding = 16.0
+        static let fontSize = 12.0
+        static let minimumFontSize = 7.0
+    }
+
     private var license: Licensable
 
     init(_ license: Licensable) {
@@ -31,22 +37,30 @@ struct LicenseView: View {
     }
 
     var body: some View {
-        List {
-            LabeledContent("Author", value: license.author)
-            ForEach(license.attributes) { attribute in
-                switch attribute.value {
-                case .text(let text):
-                    LabeledContent(attribute.name, value: text)
-                case .url(let url):
-                    Link(attribute.name, url: url)
+        GeometryReader { geometry in
+            List {
+                LabeledContent("Author", value: license.author)
+                ForEach(license.attributes) { attribute in
+                    switch attribute.value {
+                    case .text(let text):
+                        LabeledContent(attribute.name, value: text)
+                    case .url(let url):
+                        Link(attribute.name, url: url)
+                    }
                 }
-            }
-            .prefersTextualRepresentation()
-            Text(license.text)
-                .textSelection(.enabled)
+                .prefersTextualRepresentation()
+                HStack {
+                    Spacer()
+                    NonWrappingText(license.text,
+                                    fontSize: LayoutMetrics.fontSize,
+                                    minimumFontSize: LayoutMetrics.minimumFontSize,
+                                    maxWidth: geometry.size.width - (LayoutMetrics.textPadding * 2))
+                    Spacer()
+                }
                 .padding(.top, 8)
+            }
+            .listStyle(PlainListStyle())
         }
-        .listStyle(PlainListStyle())
 #if os(iOS)
         .navigationBarTitle(license.name, displayMode: .inline)
 #endif

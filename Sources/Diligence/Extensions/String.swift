@@ -20,13 +20,44 @@
 
 import SwiftUI
 
-public extension String {
+struct StringLayoutMetrics {
+
+    let size: CGSize
+    let fontSize: CGFloat
+
+}
+
+extension String {
 
     init?(contentsOfBundleFile filename: String, bundle: Bundle = Bundle.main) {
         guard let path = bundle.path(forResource: filename, ofType: nil) else {
             return nil
         }
         try? self.init(contentsOfFile: path)
+    }
+
+    func metrics(forFontSize fontSize: CGFloat) -> StringLayoutMetrics {
+        let font = NativeFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        let size = self.size(withAttributes: [.font : font])
+        return StringLayoutMetrics(size: size, fontSize: fontSize)
+    }
+
+    func fontSize(thatFits width: CGFloat,
+                  preferredFontSize: CGFloat,
+                  minimumFontSize: CGFloat) -> StringLayoutMetrics {
+        precondition(minimumFontSize > 0)
+        precondition(minimumFontSize < width)
+
+        // Check to see if the preferred font size fits; return it if it does.
+        let idealSize = metrics(forFontSize: preferredFontSize)
+        if idealSize.size.width <= width {
+            return idealSize
+        }
+
+        // Calculate the scale and return the preferred size.
+        let scale = width / idealSize.size.width
+        let fontSize = max(preferredFontSize * scale, minimumFontSize)
+        return metrics(forFontSize: fontSize)
     }
 
 }
