@@ -20,23 +20,29 @@
 
 import SwiftUI
 
+import Licensable
+
 public struct LicenseGroup: Identifiable, Equatable {
+
+    public static func == (lhs: LicenseGroup, rhs: LicenseGroup) -> Bool {
+        return lhs.id == rhs.id
+    }
 
     public let id = UUID()
 
     let title: String
-    let licenses: [License]
+    let licenses: [AnyLicensable]
 
-    public init(_ title: String, includeDiligenceLicense: Bool = false, licenses: [License]) {
+    public init(_ title: String, includeDiligenceLicense: Bool = false, licenses: [Licensable]) {
         self.title = title
         if includeDiligenceLicense {
-            self.licenses = licenses.includingDiligenceLicense().sortedByName()
+            self.licenses = licenses.includingDiligenceLicense().flatten().sortedByName().eraseToAnyLicensable()
         } else {
-            self.licenses = licenses.sortedByName()
+            self.licenses = licenses.flatten().sortedByName().eraseToAnyLicensable()
         }
     }
 
-    public init(_ title: String, includeDiligenceLicense: Bool = false, @LicensesBuilder licenses: () -> [License]) {
+    public init(_ title: String, includeDiligenceLicense: Bool = false, @LicensesBuilder licenses: () -> [Licensable]) {
         self.init(title, includeDiligenceLicense: includeDiligenceLicense, licenses: licenses())
     }
 

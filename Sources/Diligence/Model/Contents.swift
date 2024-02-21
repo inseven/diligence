@@ -20,6 +20,8 @@
 
 import Foundation
 
+import Licensable
+
 public struct Contents {
 
     let repository: String?
@@ -44,7 +46,7 @@ public struct Contents {
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] }) {
+                @LicensesBuilder licenses: () -> [Licensable] = { [] }) {
         self.init(repository: repository,
                   copyright: copyright,
                   actions: actions,

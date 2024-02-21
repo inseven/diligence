@@ -21,6 +21,8 @@
 import Combine
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(iOS)
 
 public struct PhoneAboutView: View {
@@ -56,7 +58,7 @@ public struct PhoneAboutView: View {
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action] = { [] },
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] },
+                @LicensesBuilder licenses: () -> [Licensable] = { [] },
                 usesAppKit: Bool = false) {
         self.init(repository: repository,
                   copyright: copyright,

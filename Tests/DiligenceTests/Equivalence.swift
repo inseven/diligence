@@ -20,6 +20,8 @@
 
 import XCTest
 
+import Licensable
+
 @testable import Diligence
 
 protocol Equivalence {
@@ -47,9 +49,9 @@ extension LicenseGroup: Equivalence {
 
 }
 
-extension License: Equivalence {
+extension AnyLicensable: Equivalence {
 
-    func isEquivalent(_ other: License) -> Bool {
+    func isEquivalent(_ other: AnyLicensable) -> Bool {
         return (self.name == other.name &&
                 self.author == other.author &&
                 self.text == other.text)

@@ -45,6 +45,7 @@ public struct Link: View {
     }
 
     public var body: some View {
+#if os(iOS)
         Button {
             openURL(url)
         } label: {
@@ -64,5 +65,14 @@ public struct Link: View {
             }
         }
         .foregroundColor(.primary)
+        .buttonStyle(.plain)
+#else
+        LabeledContent(text) {
+            Text(url.absoluteString)
+                .hyperlink {
+                    openURL(url)
+                }
+        }
+#endif
     }
 }

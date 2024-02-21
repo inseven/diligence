@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -28,22 +30,28 @@ struct MacLicenseView: View {
     private struct LayoutMetrics {
         static let width = 400.0
         static let height = 500.0
+        static let interItemSpacing = 16.0
     }
 
-    var license: License
+    var license: Licensable
 
     var body: some View {
         ScrollView {
-            VStack {
-                HStack {
-                    Text("Author")
-                    Spacer()
-                    Text(license.author)
-                        .foregroundColor(.secondary)
+            VStack(spacing: LayoutMetrics.interItemSpacing) {
+                LabeledContent("Author", value: license.author)
+                ForEach(license.attributes) { attribute in
+                    switch attribute.value {
+                    case .text(let text):
+                        LabeledContent(attribute.name, value: text)
+                    case .url(let url):
+                        Link(attribute.name, url: url)
+                    }
                 }
+                .prefersTextualRepresentation()
                 Divider()
                 Text(license.text)
             }
+            .labeledContentStyle(.attribute)
             .padding()
         }
         .safeAreaInset(edge: .bottom) {

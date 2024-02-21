@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -27,11 +29,20 @@ struct MacLicenseWindowGroup: Scene {
 
     static let windowID = "diligence-license-window"
 
-    let licenses: [License]
+    let licenses: [License.ID: Licensable]
+
+    init(licenses: [Licensable]) {
+        self.licenses = licenses
+            .includingDiligenceLicense()
+            .flatten()
+            .reduce(into: [License.ID: Licensable]()) { partialResult, licensable in
+                partialResult[licensable.id] = licensable
+            }
+    }
 
     var body: some Scene {
         WindowGroup(id: Self.windowID, for: License.ID.self) { $licenseId in
-            if let license = licenses.includingDiligenceLicense().first(where: { $0.id == licenseId }) {
+            if let licenseId, let license = licenses[licenseId] {
                 MacLicenseView(license: license)
             }
         }

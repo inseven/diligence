@@ -20,17 +20,19 @@
 
 import SwiftUI
 
+import Licensable
+
 public struct LicenseSection: View {
 
     var title: String?
-    var licenses: [License]
+    var licenses: [AnyLicensable]
 
-    public init(_ title: String? = nil, _ licenses: [License]) {
+    public init(_ title: String? = nil, _ licenses: [Licensable]) {
         self.title = title
-        self.licenses = licenses.sorted()
+        self.licenses = licenses.flatten().sortedByName().eraseToAnyLicensable()
     }
 
-    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
+    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [Licensable]) {
         self.init(title, licenses())
     }
 

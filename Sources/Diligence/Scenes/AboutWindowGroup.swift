@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+import Licensable
+
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
@@ -50,7 +52,7 @@ public struct AboutWindowGroup: Scene {
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action],
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] }) {
+                @LicensesBuilder licenses: () -> [Licensable] = { [] }) {
         self.init(repository: repository,
                   copyright: copyright,
                   actions: actions,
