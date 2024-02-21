@@ -32,7 +32,7 @@ public struct LicenseSection: View {
         self.licenses = licenses.flatten().sortedByName().eraseToAnyLicensable()
     }
 
-    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [License]) {
+    public init(_ title: String? = nil, @LicensesBuilder licenses: () -> [Licensable]) {
         self.init(title, licenses())
     }
 

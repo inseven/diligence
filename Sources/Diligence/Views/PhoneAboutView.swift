@@ -56,7 +56,7 @@ public struct PhoneAboutView: View {
                 copyright: String? = nil,
                 @ActionsBuilder actions: () -> [Action] = { [] },
                 @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                @LicensesBuilder licenses: () -> [License] = { [] },
+                @LicensesBuilder licenses: () -> [Licensable] = { [] },
                 usesAppKit: Bool = false) {
         self.init(repository: repository,
                   copyright: copyright,

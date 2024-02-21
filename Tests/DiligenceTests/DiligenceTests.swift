@@ -21,21 +21,23 @@
 import XCTest
 @testable import Diligence
 
+import Licensable
+
 final class DiligenceTests: XCTestCase {
 
     func testEquivalence() {
 
-        XCTAssertNotEquivalent([License("Fromage", author: "Fromage", text: "skdjfh")],
-                               [License("Cheese", author: "Fromage", text: "skdjfh")])
+        XCTAssertNotEquivalent([License("Fromage", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable(),
+                               [License("Cheese", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable())
 
-        XCTAssertNotEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")],
-                               [License("Cheese", author: "Fromage", text: "skdjfkjshdfh")])
+        XCTAssertNotEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable(),
+                               [License("Cheese", author: "Fromage", text: "skdjfkjshdfh")].eraseToAnyLicensable())
 
-        XCTAssertNotEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")],
-                            [License("Cheese", author: "Random", text: "skdjfh")])
+        XCTAssertNotEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable(),
+                            [License("Cheese", author: "Random", text: "skdjfh")].eraseToAnyLicensable())
 
-        XCTAssertEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")],
-                            [License("Cheese", author: "Fromage", text: "skdjfh")])
+        XCTAssertEquivalent([License("Cheese", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable(),
+                            [License("Cheese", author: "Fromage", text: "skdjfh")].eraseToAnyLicensable())
     }
 
     func testContents() {
@@ -49,23 +51,24 @@ final class DiligenceTests: XCTestCase {
         } licenses: {
             License("Name", author: "Author", text: "License")
         }
+
         XCTAssertEquivalent(contents.licenseGroups,
                             [LicenseGroup("Licenses", licenses: [
                                 License("Name", author: "Author", text: "License"),
-                                Diligence.Legal.license,
+                                .diligence,
                             ])])
     }
 
     func testLicenseGroup() {
 
         let licenseGroup = LicenseGroup("Fonts") {
-            License("One", author: "Two", text: "Three")
-            License("Four", author: "Five", text: "Six")
+            License("One", author: "Two", text: "Three").eraseToAnyLicensable()
+            License("Four", author: "Five", text: "Six").eraseToAnyLicensable()
         }
         XCTAssertEqual(licenseGroup.title, "Fonts")
         XCTAssertEquivalent(licenseGroup.licenses, [
-            License("Four", author: "Five", text: "Six"),
-            License("One", author: "Two", text: "Three"),
+            License("Four", author: "Five", text: "Six").eraseToAnyLicensable(),
+            License("One", author: "Two", text: "Three").eraseToAnyLicensable(),
         ])
 
     }
@@ -77,11 +80,13 @@ final class DiligenceTests: XCTestCase {
             License("Four", author: "Five", text: "Six")
         }
         XCTAssertEqual(licenseGroup.title, "Fonts")
-        XCTAssertEquivalent(licenseGroup.licenses, [
-            Diligence.Legal.license,
+
+        let expected: [Licensable] = [
+            .diligence,
             License("Four", author: "Five", text: "Six"),
             License("One", author: "Two", text: "Three"),
-        ])
+        ]
+        XCTAssertEquivalent(licenseGroup.licenses, expected.eraseToAnyLicensable())
     }
 
 }

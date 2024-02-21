@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Licensable",
+        "repositoryURL": "https://github.com/inseven/licensable",
+        "state": {
+          "branch": null,
+          "revision": "192b84b28cd7037b0beb8ed13d73c9d90ca0aefd",
+          "version": "0.0.8"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

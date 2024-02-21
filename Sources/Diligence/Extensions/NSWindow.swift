@@ -23,6 +23,8 @@
 import AppKit
 import SwiftUI
 
+import Licensable
+
 extension NSWindow {
 
     @available(macOS 13, *)
@@ -30,7 +32,7 @@ extension NSWindow {
                             copyright: String? = nil,
                             @ActionsBuilder actions: () -> [Action],
                             @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
-                            @LicensesBuilder licenses: () -> [License] = { [] }) {
+                            @LicensesBuilder licenses: () -> [Licensable] = { [] }) {
         let aboutView = AboutView(repository: repository,
                                   copyright: copyright,
                                   actions: actions,
