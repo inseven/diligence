@@ -20,34 +20,30 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
+struct NonWrappingText: View {
 
-@available(macOS 13, *)
-struct MacAboutSection<Content: View>: View {
+    let text: String
+    let layout: StringLayoutMetrics
+    let maxWidth: CGFloat
 
-    var title: String?
-    var content: Content
+    init(_ text: String, fontSize: CGFloat, minimumFontSize: CGFloat? = nil, maxWidth: CGFloat = .infinity) {
+        self.text = text
+        self.maxWidth = maxWidth
 
-    public init(_ title: String? = nil, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
+        if let minimumFontSize {
+            self.layout = text.fontSize(thatFits: maxWidth,
+                                          preferredFontSize: fontSize,
+                                          minimumFontSize: minimumFontSize)
+        } else {
+            self.layout = text.metrics(forFontSize: fontSize)
+        }
     }
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4.0) {
-                if let title = title {
-                    Text(title)
-                        .fontWeight(.bold)
-                        .textSelection(.disabled)
-                }
-                content
-            }
-            Spacer()
-        }
-        .padding(.bottom)
+        Text(text)
+            .font(.system(size: layout.fontSize, design: .monospaced))
+            .frame(width: min(layout.size.width, maxWidth))
+            .textSelection(.enabled)
     }
 
 }
-
-#endif

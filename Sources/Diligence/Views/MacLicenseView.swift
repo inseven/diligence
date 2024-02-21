@@ -28,8 +28,9 @@ import Licensable
 struct MacLicenseView: View {
 
     private struct LayoutMetrics {
-        static let width = 400.0
-        static let height = 500.0
+        static let fontSize = 12.0
+        static let maximumWidth = 720.0
+        static let minimumHeight = 300.0
         static let interItemSpacing = 16.0
     }
 
@@ -49,28 +50,15 @@ struct MacLicenseView: View {
                 }
                 .prefersTextualRepresentation()
                 Divider()
-                Text(license.text)
+                NonWrappingText(license.text, fontSize: LayoutMetrics.fontSize, maxWidth: LayoutMetrics.maximumWidth)
             }
             .labeledContentStyle(.attribute)
+            .frame(width: LayoutMetrics.maximumWidth)
             .padding()
-        }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                Divider()
-                HStack {
-                    Spacer()
-                    Button("Copy") {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(license.text, forType: .string)
-                    }
-                }
-                .padding()
-            }
-            .background(Color.textBackgroundColor)
         }
         .background(Color.textBackgroundColor)
         .navigationTitle(license.name)
-        .frame(width: LayoutMetrics.width, height: LayoutMetrics.height)
+        .frame(minHeight: LayoutMetrics.minimumHeight)
     }
 
 }

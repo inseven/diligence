@@ -20,34 +20,8 @@
 
 import SwiftUI
 
-#if compiler(>=5.7)
-
-@available(macOS 13, *)
-struct MacAboutSection<Content: View>: View {
-
-    var title: String?
-    var content: Content
-
-    public init(_ title: String? = nil, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4.0) {
-                if let title = title {
-                    Text(title)
-                        .fontWeight(.bold)
-                        .textSelection(.disabled)
-                }
-                content
-            }
-            Spacer()
-        }
-        .padding(.bottom)
-    }
-
-}
-
+#if os(macOS)
+typealias NativeFont = NSFont
+#else
+typealias NativeFont = UIFont
 #endif
