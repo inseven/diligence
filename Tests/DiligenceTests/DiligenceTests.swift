@@ -84,6 +84,7 @@ final class DiligenceTests: XCTestCase {
         let expected: [Licensable] = [
             .diligence,
             License("Four", author: "Five", text: "Six"),
+            .licensable,
             License("One", author: "Two", text: "Three"),
         ]
         XCTAssertEquivalent(licenseGroup.licenses, expected.eraseToAnyLicensable())
