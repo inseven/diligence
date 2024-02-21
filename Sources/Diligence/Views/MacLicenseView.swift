@@ -25,11 +25,73 @@ import Licensable
 #if compiler(>=5.7) && os(macOS)
 
 @available(macOS 13, *)
+struct FixedWidthTextView: View {
+
+    let text: String
+    let fontSize: CGFloat
+    let size: CGSize
+
+    init(_ text: String, fontSize: CGFloat) {
+        self.text = text
+        self.fontSize = fontSize
+        let font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        self.size = NSString(string: text).size(withAttributes: [.font : font])
+    }
+
+    var body: some View {
+        Text(text)
+            .font(.system(size: fontSize, design: .monospaced))
+            .frame(width: size.width, height: size.height)
+            .textSelection(.enabled)
+    }
+
+}
+
+extension NSString {
+
+    func fontSize(thatFits width: CGFloat, minimumFontSize: CGFloat = 1.0) -> CGFloat {
+        precondition(minimumFontSize > 0)
+        precondition(minimumFontSize < width)
+        print("width = \(width)")
+        // TODO: Some sort of binary search to increment?
+        var fontSize = 12.0
+        while fontSize > 1.0 {
+            let font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
+            let size = self.size(withAttributes: [.font : font])
+            if size.width <= width {
+                print("fontSize = \(fontSize)")
+                return fontSize
+            }
+            fontSize -= 1.0
+        }
+        return fontSize
+    }
+
+}
+
+@available(macOS 13, *)
+struct ScalingTextView: View {
+
+    let text: String
+
+    init(_ text: String) {
+        self.text = text
+    }
+
+    var body: some View {
+        GeometryReader { geometry in
+            let fontSize = (text as NSString).fontSize(thatFits: geometry.size.width)
+            FixedWidthTextView(text, fontSize: fontSize)
+        }
+    }
+
+}
+
+@available(macOS 13, *)
 struct MacLicenseView: View {
 
     private struct LayoutMetrics {
-        static let width = 400.0
-        static let height = 500.0
+        static let minimumHeight = 300.0
         static let interItemSpacing = 16.0
     }
 
@@ -49,28 +111,15 @@ struct MacLicenseView: View {
                 }
                 .prefersTextualRepresentation()
                 Divider()
-                Text(license.text)
+                FixedWidthTextView(license.text, fontSize: 12)
             }
             .labeledContentStyle(.attribute)
             .padding()
         }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                Divider()
-                HStack {
-                    Spacer()
-                    Button("Copy") {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(license.text, forType: .string)
-                    }
-                }
-                .padding()
-            }
-            .background(Color.textBackgroundColor)
-        }
         .background(Color.textBackgroundColor)
         .navigationTitle(license.name)
-        .frame(width: LayoutMetrics.width, height: LayoutMetrics.height)
+        .fixedSize(horizontal: true, vertical: false)
+        .frame(minHeight: LayoutMetrics.minimumHeight)
     }
 
 }

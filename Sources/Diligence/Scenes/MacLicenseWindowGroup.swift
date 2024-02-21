@@ -27,6 +27,11 @@ import Licensable
 @available(macOS 13, *)
 struct MacLicenseWindowGroup: Scene {
 
+    private struct LayoutMetrics {
+        static let width = 500.0
+        static let height = 600.0
+    }
+
     static let windowID = "diligence-license-window"
 
     let licenses: [License.ID: Licensable]
@@ -46,6 +51,7 @@ struct MacLicenseWindowGroup: Scene {
                 MacLicenseView(license: license)
             }
         }
+        .defaultSize(CGSize(width: LayoutMetrics.width, height: LayoutMetrics.height))
         .windowResizability(.contentSize)
     }
 

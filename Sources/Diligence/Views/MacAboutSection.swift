@@ -39,6 +39,7 @@ struct MacAboutSection<Content: View>: View {
                 if let title = title {
                     Text(title)
                         .fontWeight(.bold)
+                        .textSelection(.disabled)
                 }
                 content
             }
