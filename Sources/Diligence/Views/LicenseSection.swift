@@ -22,26 +22,6 @@ import SwiftUI
 
 import Licensable
 
-// TODO:
-
-struct AnyLicensable: Identifiable, Licensable {
-
-    let id: String
-    let name: String
-    let author: String
-    let text: String
-    let attributes: [Attribute]
-
-    init<T: Licensable>(_ licensable: T) {
-        id = licensable.id
-        name = licensable.name
-        author = licensable.author
-        text = licensable.text
-        attributes = licensable.attributes
-    }
-
-}
-
 public struct LicenseSection: View {
 
     var title: String?
