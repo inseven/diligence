@@ -34,6 +34,20 @@ public struct License: Identifiable, Licensable {
     public init(id: String = UUID().uuidString,
                 name: String,
                 author: String,
+                text: String,
+                attributes: [Attribute] = [],
+                licenses: [Licensable] = []) {
+        self.id = id
+        self.name = name
+        self.author = author
+        self.text = text
+        self.attributes = attributes
+        self.licenses = licenses
+    }
+
+    public init(id: String = UUID().uuidString,
+                name: String,
+                author: String,
                 attributes: [NamedURL] = [],
                 text: String,
                 licenses: [Licensable] = []) {
