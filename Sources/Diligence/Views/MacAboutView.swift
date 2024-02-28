@@ -57,6 +57,8 @@ public struct MacAboutView: View {
 
         // If not, create a new license window.
         let window = NSLicenseWindow(license: license)
+        window.setContentSize(NSSize(width: MacLicenseWindowGroup.LayoutMetrics.width,
+                                     height: MacLicenseWindowGroup.LayoutMetrics.width))
         window.makeKeyAndOrderFront(nil)
     }
 
