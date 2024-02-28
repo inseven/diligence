@@ -45,6 +45,24 @@ extension NSWindow {
         self.styleMask.remove(.miniaturizable)
     }
 
+    @available(macOS 13, *)
+    public convenience init(repository: String? = nil,
+                            copyright: String? = nil,
+                            @ActionsBuilder actions: () -> [Action],
+                            @AcknowledgementsBuilder acknowledgements: () -> [Acknowledgements] = { [] },
+                            @LicenseGroupsBuilder licenses: () -> [LicenseGroup] = { [] }) {
+        let aboutView = AboutView(repository: repository,
+                                  copyright: copyright,
+                                  actions: actions,
+                                  acknowledgements: acknowledgements,
+                                  licenses: licenses,
+                                  usesAppKit: true)
+        self.init(contentViewController: NSHostingController(rootView: aboutView))
+        self.title = Bundle.main.aboutWindowTitle
+        self.styleMask.remove(.resizable)
+        self.styleMask.remove(.miniaturizable)
+    }
+
 }
 
 #endif
