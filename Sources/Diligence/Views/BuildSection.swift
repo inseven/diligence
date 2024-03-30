@@ -49,11 +49,7 @@ public struct BuildSection<Header: View>: View {
     public var body: some View {
         Section(header: header) {
             LabeledContent("Version") {
-                Text(Bundle.main.version ?? "")
-                    .textSelection(.enabled)
-            }
-            LabeledContent("Build") {
-                Text(Bundle.main.build ?? "")
+                Text(Bundle.main.extendedVersion ?? "")
                     .textSelection(.enabled)
             }
             if let date = date {
@@ -74,6 +70,7 @@ public struct BuildSection<Header: View>: View {
                             Spacer()
                             Text(commit)
                                 .prefersMonospaced()
+                                .prefersLinkForegroundStyle()
                                 .foregroundColor(.secondary)
                                 .textSelection(.enabled)
                         }

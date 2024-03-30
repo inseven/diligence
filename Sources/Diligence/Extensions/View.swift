@@ -34,4 +34,16 @@ extension View {
 #endif
     }
 
+    func prefersLinkForegroundStyle() -> some View {
+#if compiler(>=5.7)
+        if #available(macOS 14, iOS 17, *) {
+            return foregroundStyle(.link)
+        } else {
+            return self
+        }
+#else
+        return self
+#endif
+    }
+
 }
