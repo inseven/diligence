@@ -125,13 +125,10 @@ public struct MacAboutView: View {
                         .padding(.bottom)
                         MacAboutSection("Version") {
                             Text(Bundle.main.extendedVersion ?? "")
-                                .foregroundStyle(.secondary)
-                                .gridColumnAlignment(.leading)
                         }
                         if let date = Bundle.main.utcBuildDate {
                             MacAboutSection("Date") {
                                 Text(date, format: .dateTime)
-                                    .foregroundStyle(.secondary)
                             }
                         }
                         if let repository = repository,
@@ -184,21 +181,6 @@ public struct MacAboutView: View {
             .background(Color.textBackgroundColor)
             Divider()
             HStack {
-//                Text("Version \(Bundle.main.version ?? "") (\(Bundle.main.build ?? ""))")
-//                    .foregroundColor(.secondary)
-//                    .textSelection(.enabled)
-//                if let repository = repository,
-//                   let url = Bundle.main.commitUrl(for: repository),
-//                   let commit = Bundle.main.commit {
-//                    Text(commit)
-//                        .prefersMonospaced()
-//                        .hyperlink {
-//                            openURL(url)
-//                        }
-//                } else if let commit = Bundle.main.commit {
-//                    Text(commit)
-//                        .foregroundColor(.secondary)
-//                }
                 Spacer()
                 ForEach(actions) { action in
                     Button(action.title) {
