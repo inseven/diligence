@@ -114,7 +114,7 @@ public struct MacAboutView: View {
                 .padding(.all, multiplier: 2)
                 ScrollView {
                     VStack {
-                        VStack(spacing: 8.0) {
+                        VStack(alignment: .leading, spacing: 8.0) {
                             ApplicationNameTitle()
                                 .horizontalSpace(.trailing)
                             if let copyright = copyright {
@@ -123,6 +123,28 @@ public struct MacAboutView: View {
                             }
                         }
                         .padding(.bottom)
+                        MacAboutSection("Version") {
+                            Text(Bundle.main.extendedVersion ?? "")
+                                .foregroundStyle(.secondary)
+                                .gridColumnAlignment(.leading)
+                        }
+                        if let date = Bundle.main.utcBuildDate {
+                            MacAboutSection("Date") {
+                                Text(date, format: .dateTime)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        if let repository = repository,
+                           let url = Bundle.main.commitUrl(for: repository),
+                           let commit = Bundle.main.commit {
+                            MacAboutSection("Commit") {
+                                Text(commit)
+                                    .prefersMonospaced()
+                                    .hyperlink {
+                                        openURL(url)
+                                    }
+                            }
+                        }
                         if !acknowledgements.isEmpty {
                             ForEach(acknowledgements) { acknowledgements in
                                 MacAboutSection(acknowledgements.title) {
@@ -162,21 +184,21 @@ public struct MacAboutView: View {
             .background(Color.textBackgroundColor)
             Divider()
             HStack {
-                Text("Version \(Bundle.main.version ?? "") (\(Bundle.main.build ?? ""))")
-                    .foregroundColor(.secondary)
-                    .textSelection(.enabled)
-                if let repository = repository,
-                   let url = Bundle.main.commitUrl(for: repository),
-                   let commit = Bundle.main.commit {
-                    Text(commit)
-                        .prefersMonospaced()
-                        .hyperlink {
-                            openURL(url)
-                        }
-                } else if let commit = Bundle.main.commit {
-                    Text(commit)
-                        .foregroundColor(.secondary)
-                }
+//                Text("Version \(Bundle.main.version ?? "") (\(Bundle.main.build ?? ""))")
+//                    .foregroundColor(.secondary)
+//                    .textSelection(.enabled)
+//                if let repository = repository,
+//                   let url = Bundle.main.commitUrl(for: repository),
+//                   let commit = Bundle.main.commit {
+//                    Text(commit)
+//                        .prefersMonospaced()
+//                        .hyperlink {
+//                            openURL(url)
+//                        }
+//                } else if let commit = Bundle.main.commit {
+//                    Text(commit)
+//                        .foregroundColor(.secondary)
+//                }
                 Spacer()
                 ForEach(actions) { action in
                     Button(action.title) {

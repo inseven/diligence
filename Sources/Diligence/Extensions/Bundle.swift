@@ -39,7 +39,22 @@ extension Bundle {
     }
 
     public var build: String? {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+//        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        return "240330230605938340"
+    }
+
+    public var extendedVersion: String? {
+        var components: [String] = []
+        if let version {
+            components.append(version)
+        }
+        if let build {
+            components.append(build)
+        }
+        guard !components.isEmpty else {
+            return nil
+        }
+        return components.joined(separator: ".")
     }
 
     public var utcBuildDate: Date? {
