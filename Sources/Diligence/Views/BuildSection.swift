@@ -73,6 +73,7 @@ public struct BuildSection<Header: View>: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Text(commit)
+                                .prefersMonospaced()
                                 .foregroundColor(.secondary)
                                 .textSelection(.enabled)
                         }

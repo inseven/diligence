@@ -29,7 +29,7 @@ struct Hyperlink: ViewModifier {
     func body(content: Content) -> some View {
         content
             .textSelection(.disabled)
-            .prefersUnderline()
+            .underlinesForDifferentiation()
             .foregroundColor(.accentColor)
             .onTapGesture(perform: action)
             .brightness(isHovering ? 0.2 : 0.0)

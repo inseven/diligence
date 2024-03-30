@@ -20,18 +20,32 @@
 
 import SwiftUI
 
-extension View {
+private struct UnderlinesForDifferentiation: ViewModifier {
 
-    func prefersMonospaced() -> some View {
+    @Environment(\.accessibilityDifferentiateWithoutColor) var accessibilityDifferentiateWithoutColor
+
+    func body(content: Content) -> some View {
 #if compiler(>=5.7)
         if #available(macOS 13.0, iOS 16.0, *) {
-            return monospaced()
+            if accessibilityDifferentiateWithoutColor {
+                content
+                    .underline()
+            } else {
+                content
+            }
         } else {
-            return self
+            content
         }
 #else
-        return self
+        content
 #endif
+    }
+}
+
+extension View {
+
+    func underlinesForDifferentiation() -> some View {
+        return modifier(UnderlinesForDifferentiation())
     }
 
 }

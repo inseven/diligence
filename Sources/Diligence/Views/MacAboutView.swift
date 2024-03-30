@@ -169,6 +169,7 @@ public struct MacAboutView: View {
                    let url = Bundle.main.commitUrl(for: repository),
                    let commit = Bundle.main.commit {
                     Text(commit)
+                        .prefersMonospaced()
                         .hyperlink {
                             openURL(url)
                         }
