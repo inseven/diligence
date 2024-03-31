@@ -39,8 +39,7 @@ extension Bundle {
     }
 
     public var build: String? {
-//        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        return "240330230605938340"
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
 
     public var extendedVersion: String? {
