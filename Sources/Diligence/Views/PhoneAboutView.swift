@@ -92,11 +92,10 @@ public struct PhoneAboutView: View {
                             .foregroundColor(.secondary)
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
-                            .padding(.top)
                     }
                 }
-                BuildSection(repository)
                 ActionSection(actions)
+                BuildSection(repository)
                 ForEach(acknowledgements.filter { !$0.credits.isEmpty }) { acknowledgement in
                     CreditSection(acknowledgement.title, acknowledgement.credits)
                 }

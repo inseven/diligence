@@ -22,26 +22,30 @@
 
 import SwiftUI
 
-public struct HeaderSection<Header: View>: View {
+struct TableViewRowButtonStyle: ButtonStyle {
 
-    var header: Header?
-
-    public init(@ViewBuilder header: () -> Header?) {
-        self.header = header()
+    struct LayoutMetrics {
+        static let minHeight = 44.0
+        static let horizontalPadding = 20.0
+        static let cornerRadius = 10.0
     }
 
-    public var body: some View {
-        Section {
-            VStack(alignment: .center) {
-                header
-            }
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.accentColor)
             .frame(maxWidth: .infinity)
-            .foregroundColor(.primary)
-            .textCase(.none)
-            .font(.body)
-            .background(Color(uiColor: .systemGroupedBackground))
-            .listRowInsets(EdgeInsets())
-        }
+            .padding(.horizontal, LayoutMetrics.horizontalPadding)
+            .frame(minHeight: LayoutMetrics.minHeight)
+            .background(configuration.isPressed ? Color(uiColor: .systemGray4) : Color(uiColor: .secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: LayoutMetrics.cornerRadius))
+    }
+
+}
+
+extension ButtonStyle where Self == TableViewRowButtonStyle {
+
+    static var tableViewRow: TableViewRowButtonStyle {
+        return TableViewRowButtonStyle()
     }
 
 }
