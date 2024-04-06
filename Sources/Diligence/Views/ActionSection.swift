@@ -18,9 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if os(iOS)
+
 import SwiftUI
 
 public struct ActionSection: View {
+
+    @Environment(\.openURL) private var openURL
 
     private var actions: [Action]
 
@@ -32,12 +36,25 @@ public struct ActionSection: View {
         self.actions = actions()
     }
 
+    let columns = [GridItem(.flexible(), spacing: 12.0), GridItem(.flexible(), spacing: 12.0)]
+
     public var body: some View {
         Section {
-            ForEach(actions) { action in
-                Link(action.title, url: action.url)
+            LazyVGrid(columns: columns, spacing: 12.0) {
+                ForEach(actions) { action in
+                    Button {
+                        openURL(action.url)
+                    } label: {
+                        Text(action.title)
+                    }
+                }
             }
+            .buttonStyle(.tableViewRow)
+            .background(Color(uiColor: .systemGroupedBackground))
+            .listRowInsets(EdgeInsets())
         }
     }
 
 }
+
+#endif
