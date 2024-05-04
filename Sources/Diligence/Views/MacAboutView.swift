@@ -120,26 +120,42 @@ public struct MacAboutView: View {
                             if let copyright = copyright {
                                 Text(copyright)
                                     .horizontalSpace(.trailing)
+                                    .foregroundColor(.secondary)
                             }
                         }
                         .padding(.bottom)
-                        MacAboutSection("Version") {
-                            Text(Bundle.main.extendedVersion ?? "")
-                        }
-                        if let date = Bundle.main.utcBuildDate {
-                            MacAboutSection("Date") {
-                                Text(date, format: .dateTime)
-                            }
-                        }
-                        if let repository = repository,
-                           let url = Bundle.main.commitUrl(for: repository),
-                           let commit = Bundle.main.commit {
-                            MacAboutSection("Commit") {
-                                Text(commit)
-                                    .prefersMonospaced()
-                                    .hyperlink {
-                                        openURL(url)
+                        MacAboutSection {
+                            Grid {
+                                GridRow {
+                                    Text("Version")
+                                        .gridColumnAlignment(.trailing)
+                                        .font(.headline)
+                                        .textSelection(.disabled)
+                                    Text(Bundle.main.extendedVersion ?? "")
+                                        .gridColumnAlignment(.leading)
+                                }
+                                if let date = Bundle.main.utcBuildDate {
+                                    GridRow {
+                                        Text("Date")
+                                            .font(.headline)
+                                            .textSelection(.disabled)
+                                        Text(date, format: .dateTime)
                                     }
+                                }
+                                if let repository = repository,
+                                   let url = Bundle.main.commitUrl(for: repository),
+                                   let commit = Bundle.main.commit {
+                                    GridRow {
+                                        Text("Commit")
+                                            .font(.headline)
+                                            .textSelection(.disabled)
+                                        Text(commit)
+                                            .prefersMonospaced()
+                                            .hyperlink {
+                                                openURL(url)
+                                            }
+                                    }
+                                }
                             }
                         }
                         if !acknowledgements.isEmpty {
