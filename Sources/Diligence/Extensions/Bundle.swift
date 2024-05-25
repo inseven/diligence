@@ -79,7 +79,7 @@ extension Bundle {
         guard let shaValue = Int(String(build.suffix(8))) else {
             return nil
         }
-        return String(format: "%02x", shaValue)
+        return String(format: "%06x", shaValue)
     }
 
     public func commitUrl(for project: String) -> URL? {
