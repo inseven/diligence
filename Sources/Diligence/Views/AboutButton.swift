@@ -20,6 +20,8 @@
 
 import SwiftUI
 
+#if os(iOS)
+
 public struct AboutButton: View {
 
     enum SheetType: Identifiable {
@@ -58,3 +60,5 @@ public struct AboutButton: View {
     }
 
 }
+
+#endif
