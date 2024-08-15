@@ -38,7 +38,7 @@ extension EnvironmentValues {
 extension View {
 
     func prefersTextualRepresentation(_ prefersTextualRepresentation: Bool = true) -> some View {
-        return environment(\.prefersTextualRepresentation, true)
+        return environment(\.prefersTextualRepresentation, prefersTextualRepresentation)
     }
 
 }
