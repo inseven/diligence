@@ -59,20 +59,27 @@ public struct BuildSection<Header: View>: View {
                 }
             }
             if let commit = Bundle.main.commit {
-                if let project = project,
-                   let url = Bundle.main.commitUrl(for: project){
+                if let project = project {
+                   let url = Bundle.main.commitUrl(for: project)
                     Button {
-                        openURL(url)
+                        if let url {
+                            openURL(url)
+                        }
                     } label: {
                         HStack {
                             Text("Commit")
                                 .foregroundColor(.primary)
                             Spacer()
-                            Text(commit)
-                                .prefersMonospaced()
-                                .prefersLinkForegroundStyle()
-                                .foregroundColor(.secondary)
-                                .textSelection(.enabled)
+                            if url != nil {
+                                Text(commit)
+                                    .prefersMonospaced()
+                                    .prefersLinkForegroundStyle()
+                                    .foregroundColor(.secondary)
+                                    .textSelection(.enabled)
+                            } else {
+                                Text(commit)
+                                    .prefersMonospaced()
+                            }
                         }
                     }
                 } else {
