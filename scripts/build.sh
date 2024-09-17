@@ -13,8 +13,8 @@ xcodebuild -scheme Diligence -showdestinations
 
 # Build.
 xcodebuild -scheme Diligence -destination "platform=macOS" clean build
-xcodebuild -scheme Diligence -destination "platform=iOS Simulator,name=iPhone 14 Pro" clean build
+xcodebuild -scheme Diligence -destination "$DEFAULT_IPHONE_DESTINATION" clean build
 
 # Test.
 xcodebuild -scheme Diligence -destination "platform=macOS" test
-xcodebuild -scheme Diligence -destination "platform=iOS Simulator,name=iPhone 14 Pro" test
+xcodebuild -scheme Diligence -destination "$DEFAULT_IPHONE_DESTINATION" test
