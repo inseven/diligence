@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2024 Jason Morley
+// Copyright (c) 2018-2025 Jason Morley
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -151,19 +151,23 @@ public struct MacAboutView: View {
                                         Text(date, format: .dateTime)
                                     }
                                 }
-                                if let repository = repository,
-                                   let url = Bundle.main.commitUrl(for: repository),
-                                   let commit = Bundle.main.commit {
+                                if let commit = Bundle.main.commit {
                                     GridRow {
                                         Text("Commit")
                                             .gridColumnAlignment(.trailing)
                                             .font(.headline)
                                             .textSelection(.disabled)
-                                        Text(commit)
-                                            .prefersMonospaced()
-                                            .hyperlink {
-                                                openURL(url)
-                                            }
+                                        if let repository = repository,
+                                           let url = Bundle.main.commitUrl(for: repository) {
+                                            Text(commit)
+                                                .prefersMonospaced()
+                                                .hyperlink {
+                                                    openURL(url)
+                                                }
+                                        } else {
+                                            Text(commit)
+                                                .prefersMonospaced()
+                                        }
                                     }
                                 }
                             }

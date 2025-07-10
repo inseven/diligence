@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2024 Jason Morley
+// Copyright (c) 2018-2025 Jason Morley
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,20 @@ extension NSWindow {
         self.styleMask.remove(.miniaturizable)
     }
 
+    @available(macOS 13, *)
+    public convenience init(_ contents: Contents) {
+        let aboutView = AboutView(repository: contents.repository,
+                                  copyright: contents.copyright,
+                                  actions: { contents.actions },
+                                  acknowledgements: { contents.acknowledgements },
+                                  licenses: { contents.licenseGroups },
+                                  usesAppKit: true)
+        self.init(contentViewController: NSHostingController(rootView: aboutView))
+        self.title = Bundle.main.aboutWindowTitle
+        self.styleMask.remove(.resizable)
+        self.styleMask.remove(.miniaturizable)
+    }
+    
 }
 
 #endif

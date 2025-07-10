@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2024 Jason Morley
+// Copyright (c) 2018-2025 Jason Morley
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ extension EnvironmentValues {
 extension View {
 
     func prefersTextualRepresentation(_ prefersTextualRepresentation: Bool = true) -> some View {
-        return environment(\.prefersTextualRepresentation, true)
+        return environment(\.prefersTextualRepresentation, prefersTextualRepresentation)
     }
 
 }

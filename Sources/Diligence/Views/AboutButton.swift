@@ -20,45 +20,45 @@
 
 import SwiftUI
 
-struct HorizontalSpace: ViewModifier {
+#if os(iOS)
 
-    public struct Edge: OptionSet {
-        public let rawValue: UInt
+public struct AboutButton: View {
 
-        public static let leading = Edge(rawValue: 1 << 0)
-        public static let trailing = Edge(rawValue: 1 << 1)
+    enum SheetType: Identifiable {
 
-        public static let both: Edge = [.leading, .trailing]
-
-        public init(rawValue: UInt) {
-            self.rawValue = rawValue
+        var id: Self {
+            return self
         }
+
+        case about
     }
 
-    var edges: Edge = .both
+    @Environment(\.dismiss) var dismiss
 
-    public init(_ edges: Edge) {
-        self.edges = edges
+    let contents: Contents
+
+    @State var sheet: SheetType?
+
+    public init(_ contents: Contents) {
+        self.contents = contents
     }
 
-    public func body(content: Content) -> some View {
-        HStack {
-            if edges.contains(.leading) {
-                Spacer()
-            }
-            content
-            if edges.contains(.trailing) {
-                Spacer()
+    public var body: some View {
+        Button {
+            sheet = .about
+        } label: {
+            Text("About \(Bundle.main.preferredName ?? "")...")
+                .foregroundColor(.primary)
+        }
+        .sheet(item: $sheet) { sheet in
+            switch sheet {
+            case .about:
+                AboutView(contents)
             }
         }
+
     }
 
 }
 
-extension View {
-
-    func horizontalSpace(_ edges: HorizontalSpace.Edge) -> some View {
-        return modifier(HorizontalSpace(edges))
-    }
-
-}
+#endif
