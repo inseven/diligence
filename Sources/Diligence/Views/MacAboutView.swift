@@ -131,12 +131,21 @@ public struct MacAboutView: View {
                                         .gridColumnAlignment(.trailing)
                                         .font(.headline)
                                         .textSelection(.disabled)
-                                    Text(Bundle.main.extendedVersion ?? "")
+                                    Text(Bundle.main.version ?? "")
+                                        .gridColumnAlignment(.leading)
+                                }
+                                GridRow {
+                                    Text("Build")
+                                        .gridColumnAlignment(.trailing)
+                                        .font(.headline)
+                                        .textSelection(.disabled)
+                                    Text(Bundle.main.build ?? "")
                                         .gridColumnAlignment(.leading)
                                 }
                                 if let date = Bundle.main.utcBuildDate {
                                     GridRow {
                                         Text("Date")
+                                            .gridColumnAlignment(.trailing)
                                             .font(.headline)
                                             .textSelection(.disabled)
                                         Text(date, format: .dateTime)
@@ -147,6 +156,7 @@ public struct MacAboutView: View {
                                    let commit = Bundle.main.commit {
                                     GridRow {
                                         Text("Commit")
+                                            .gridColumnAlignment(.trailing)
                                             .font(.headline)
                                             .textSelection(.disabled)
                                         Text(commit)
