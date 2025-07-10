@@ -49,7 +49,11 @@ public struct BuildSection<Header: View>: View {
     public var body: some View {
         Section(header: header) {
             LabeledContent("Version") {
-                Text(Bundle.main.extendedVersion ?? "")
+                Text(Bundle.main.version ?? "")
+                    .textSelection(.enabled)
+            }
+            LabeledContent("Build") {
+                Text(Bundle.main.build ?? "")
                     .textSelection(.enabled)
             }
             if let date = date {
