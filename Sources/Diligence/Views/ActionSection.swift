@@ -24,6 +24,18 @@ import SwiftUI
 
 public struct ActionSection: View {
 
+    struct LayoutMetrics {
+
+        static let spacing: CGFloat = {
+            if #available(iOS 26, *) {
+                return 16.0
+            } else {
+                return 12.0
+            }
+        }()
+
+    }
+
     @Environment(\.openURL) private var openURL
 
     private var actions: [Action]
@@ -36,11 +48,11 @@ public struct ActionSection: View {
         self.actions = actions()
     }
 
-    let columns = [GridItem(.flexible(), spacing: 12.0), GridItem(.flexible(), spacing: 12.0)]
+    let columns = [GridItem(.flexible(), spacing: LayoutMetrics.spacing), GridItem(.flexible(), spacing: LayoutMetrics.spacing)]
 
     public var body: some View {
         Section {
-            LazyVGrid(columns: columns, spacing: 12.0) {
+            LazyVGrid(columns: columns, spacing: LayoutMetrics.spacing) {
                 ForEach(actions) { action in
                     Button {
                         openURL(action.url)
