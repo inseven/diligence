@@ -25,9 +25,30 @@ import SwiftUI
 struct TableViewRowButtonStyle: ButtonStyle {
 
     struct LayoutMetrics {
-        static let minHeight = 44.0
-        static let horizontalPadding = 20.0
-        static let cornerRadius = 10.0
+
+        static let minHeight: CGFloat = {
+            if #available(iOS 26, *) {
+                return 56.0
+            } else {
+                return 44.0
+            }
+        }()
+
+        static let horizontalPadding: CGFloat = {
+            if #available(iOS 26, *) {
+                return 28.0
+            } else {
+                return 20.0
+            }
+        }()
+
+        static let cornerRadius: CGFloat = {
+            if #available(iOS 26, *) {
+                return 25.0
+            } else {
+                return 10.0
+            }
+        }()
     }
 
     func makeBody(configuration: Configuration) -> some View {
@@ -37,7 +58,7 @@ struct TableViewRowButtonStyle: ButtonStyle {
             .padding(.horizontal, LayoutMetrics.horizontalPadding)
             .frame(minHeight: LayoutMetrics.minHeight)
             .background(configuration.isPressed ? Color(uiColor: .systemGray4) : Color(uiColor: .secondarySystemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: LayoutMetrics.cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: LayoutMetrics.cornerRadius, style: .circular))
     }
 
 }
