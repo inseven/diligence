@@ -77,8 +77,8 @@ public struct BuildSection<Header: View>: View {
                             if url != nil {
                                 Text(commit)
                                     .prefersMonospaced()
+                                    .foregroundColor(.accentColor)
                                     .prefersLinkForegroundStyle()
-                                    .foregroundColor(.secondary)
                                     .textSelection(.enabled)
                             } else {
                                 Text(commit)
