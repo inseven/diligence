@@ -20,12 +20,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+ROOT_DIRECTORY="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" &> /dev/null && pwd )"
+SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 
-SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-ROOT_DIRECTORY="${SCRIPTS_DIRECTORY}/.."
+export LOCAL_TOOLS_PATH="$ROOT_DIRECTORY/.local"
 
-export PYTHONUSERBASE="${ROOT_DIRECTORY}/.local/python"
-mkdir -p "$PYTHONUSERBASE"
-export PATH="${PYTHONUSERBASE}/bin":$PATH
+export BIN_DIRECTORY="$ROOT_DIRECTORY/.local/bin"
+export PATH=$BIN_DIRECTORY:$PATH
 
-export PATH=$PATH:"${SCRIPTS_DIRECTORY}/changes"
+source "$LOCAL_TOOLS_PATH/python/bin/activate"
+
+export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_IGNORE_VIRTUALENVS=1
+
+export PATH=$PATH:"$SCRIPTS_DIRECTORY/changes"
