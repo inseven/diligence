@@ -114,12 +114,16 @@ public struct PhoneAboutView: View {
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Text("Done")
-                            .bold()
+                        if #available(iOS 26, *) {
+                            Image(systemName: "xmark")
+                        } else {
+                            Text("Cancel")
+                                .bold()
+                        }
                     }
                 }
 
