@@ -32,8 +32,10 @@ public struct AboutCommands: Commands {
     public var body: some Commands {
 
         CommandGroup(replacing: .appInfo) {
-            Button("About \(Bundle.main.preferredName ?? "")") {
+            Button {
                 openWindow(id: MacAboutWindow.windowID)
+            } label: {
+                Label("About \(Bundle.main.preferredName ?? "")", systemImage: "info.circle")
             }
         }
 
