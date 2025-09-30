@@ -76,6 +76,9 @@ public struct AboutWindowGroup: Scene {
                        licenseGroups: licenseGroups)
         .commands {
             AboutCommands()
+            ActionsCommands(placement: .before(.help)) {
+                self.actions
+            }
         }
         MacLicenseWindowGroup(licenses: licenseGroups.flatMap { $0.licenses })
     }

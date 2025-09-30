@@ -49,7 +49,7 @@ public struct ActionsCommands: Commands {
             Button {
                 openURL(action.url)
             } label: {
-                Text(action.title)
+                Label(action.title, systemImage: action.url.scheme == "mailto" ? "envelope" : "globe")
             }
         }
     }
@@ -59,9 +59,11 @@ public struct ActionsCommands: Commands {
         case .before(let before):
             CommandGroup(before: before) {
                 buttons
+                Divider()
             }
         case .after(let after):
             CommandGroup(after: after) {
+                Divider()
                 buttons
             }
         case .replacing(let replacing):
