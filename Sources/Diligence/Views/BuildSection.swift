@@ -65,12 +65,19 @@ public struct BuildSection<Header: View>: View {
                 }
             }
             if let commit = bundle.commit {
-                if let project = project {
-                   let url = bundle.commitUrl(for: project)
+                if let project = project,
+                   let url = bundle.commitUrl(for: project) {
+#if os(macOS)
+                    LabeledContent("Commit") {
+                        Text(commit)
+                            .prefersMonospaced()
+                            .hyperlink {
+                                openURL(url)
+                            }
+                    }
+#else
                     Button {
-                        if let url {
-                            openURL(url)
-                        }
+                        openURL(url)
                     } label: {
                         HStack {
                             Text("Commit")
@@ -88,6 +95,7 @@ public struct BuildSection<Header: View>: View {
                             }
                         }
                     }
+#endif
                 } else {
                     LabeledContent("Commit") {
                         Text(commit)
