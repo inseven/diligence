@@ -31,29 +31,31 @@ public struct BuildSection<Header: View>: View {
         return dateFormatter
     }()
 
-    var project: String?
-    var header: Header?
+    private let project: String?
+    private let bundle: Bundle
+    private let header: Header?
 
     private var date: String? {
-        guard let date = Bundle.main.utcBuildDate else {
+        guard let date = bundle.utcBuildDate else {
             return nil
         }
         return dateFormatter.string(from: date)
     }
 
-    public init(_ project: String? = nil, @ViewBuilder header: () -> Header?) {
+    public init(_ project: String? = nil, bundle: Bundle = Bundle.main, @ViewBuilder header: () -> Header?) {
         self.project = project
+        self.bundle = bundle
         self.header = header()
     }
 
     public var body: some View {
         Section(header: header) {
             LabeledContent("Version") {
-                Text(Bundle.main.version ?? "")
+                Text(bundle.version ?? "")
                     .textSelection(.enabled)
             }
             LabeledContent("Build") {
-                Text(Bundle.main.build ?? "")
+                Text(bundle.build ?? "")
                     .textSelection(.enabled)
             }
             if let date = date {
@@ -62,9 +64,9 @@ public struct BuildSection<Header: View>: View {
                         .textSelection(.enabled)
                 }
             }
-            if let commit = Bundle.main.commit {
+            if let commit = bundle.commit {
                 if let project = project {
-                   let url = Bundle.main.commitUrl(for: project)
+                   let url = bundle.commitUrl(for: project)
                     Button {
                         if let url {
                             openURL(url)
