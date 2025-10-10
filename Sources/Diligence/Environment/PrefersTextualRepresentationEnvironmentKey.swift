@@ -22,7 +22,11 @@ import SwiftUI
 
 struct PrefersTextualRepresentationEnvironmentKey: EnvironmentKey {
 
+#if os(macOS)
+    public static var defaultValue: Bool = true
+#else
     public static var defaultValue: Bool = false
+#endif
 
 }
 

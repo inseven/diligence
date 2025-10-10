@@ -20,51 +20,24 @@
 
 import SwiftUI
 
-public struct Link: View {
+struct TextOrImage: View {
 
-    @Environment(\.openURL) private var openURL
     @Environment(\.prefersTextualRepresentation) private var prefersTextualRepresentation
 
-    private let text: String
-    private let url: URL
+    let text: String
+    let systemImage: String
 
-    private var isMailto: Bool {
-        return url.scheme == "mailto"
-    }
-
-    private var image: String {
-        if isMailto {
-            return "envelope"
-        }
-        return "link"
-    }
-
-    public init(_ text: String, url: URL) {
-        self.text = text
-        self.url = url
-    }
-
-    public var body: some View {
-#if os(iOS)
-        Button {
-            openURL(url)
-        } label: {
-            LabeledContent(text) {
-                TextOrImage(text: url.absoluteString, systemImage: image)
-                    .foregroundColor(.secondary)
-            }
-        }
-        .foregroundColor(.primary)
-        .buttonStyle(.plain)
-#else
-        LabeledContent(text) {
-            TextOrImage(text: url.absoluteString, systemImage: image)
-                .hyperlink {
-                    openURL(url)
+    var body: some View {
+        if #available(iOS 16, *, macOS 13) {
+            ViewThatFits(in: .horizontal) {
+                if prefersTextualRepresentation {
+                    Text(text)
                 }
+                Image(systemName: systemImage)
+            }
+        } else {
+            Image(systemName: systemImage)
         }
-#endif
     }
+
 }
-
-
