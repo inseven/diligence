@@ -39,7 +39,7 @@ extension Bundle {
     }
 
     public var build: String? {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        return infoDictionary?["CFBundleVersion"] as? String
     }
 
     public var extendedVersion: String? {
@@ -93,7 +93,7 @@ extension Bundle {
     }
 
     public var aboutWindowTitle: String {
-        return "About \(Bundle.main.preferredName ?? "")"
+        return "About \(preferredName ?? "")"
     }
 
 }
