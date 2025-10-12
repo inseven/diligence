@@ -22,7 +22,11 @@ import SwiftUI
 
 struct PrefersTextualRepresentationEnvironmentKey: EnvironmentKey {
 
+#if os(macOS)
+    public static var defaultValue: Bool = true
+#else
     public static var defaultValue: Bool = false
+#endif
 
 }
 
@@ -37,7 +41,7 @@ extension EnvironmentValues {
 
 extension View {
 
-    func prefersTextualRepresentation(_ prefersTextualRepresentation: Bool = true) -> some View {
+    public func prefersTextualRepresentation(_ prefersTextualRepresentation: Bool = true) -> some View {
         return environment(\.prefersTextualRepresentation, prefersTextualRepresentation)
     }
 
