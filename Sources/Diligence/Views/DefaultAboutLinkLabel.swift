@@ -28,7 +28,7 @@ import SwiftUI
 public struct DefaultAboutLinkLabel : View {
 
     public var body: some View {
-        Text("About...")
+        Label("About...", systemImage: "info.circle")
     }
 
 }
