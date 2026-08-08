@@ -22,10 +22,6 @@
 
 SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ROOT_DIRECTORY="${SCRIPTS_DIRECTORY}/.."
-CHANGES_DIRECTORY="${SCRIPTS_DIRECTORY}/changes"
-CHANGES_SCRIPT="${CHANGES_DIRECTORY}/changes"
-RELEASE_SCRIPT="${CHANGES_DIRECTORY}/examples/gh-release.sh"
+RELEASE_SCRIPT="${SCRIPTS_DIRECTORY}/gh-release.sh"
 
-source "${SCRIPTS_DIRECTORY}/environment.sh"
-
-changes --verbose release --skip-if-empty --push --command "\"${RELEASE_SCRIPT}\"" "\"$@\""
+changes --verbose release --skip-if-empty --push --exec "${RELEASE_SCRIPT}" "$@"
