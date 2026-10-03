@@ -39,7 +39,7 @@ jobs:
     - name: Install mise
       uses: jdx/mise-action@v5.0.1
       with:
-        version: 2026.9.10
+        version: 2026.10.1
         cache: false
 
     - name: Build and test
